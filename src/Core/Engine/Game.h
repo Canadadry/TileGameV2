@@ -31,6 +31,7 @@
 
 #include "Screen.h"
 #include <list>
+#include <string>
 
 class Screen;
 class Entity;

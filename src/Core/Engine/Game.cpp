@@ -101,8 +101,6 @@ void Game::onEntityDestroyed(Entity* entity)
 	m_entities_to_destroyed.push_back(entity);
 }
 
-
-
 void Game::clear()
 {
 	for(Entity_it it = m_entities.begin(); it != m_entities.end();it++)
@@ -143,10 +141,10 @@ void Game::destroyedEntity(Entity* entity)
 
 void Game::handleEvent(const sf::Event& Event)
 {
-		for(GamePad_it it = m_gamepads.begin(); it != m_gamepads.end();it++)
-		{
-			(*it)->handleEvent(Event);
-		}
+	for(GamePad_it it = m_gamepads.begin(); it != m_gamepads.end();it++)
+	{
+		(*it)->handleEvent(Event);
+	}
 }
 
 void Game::render(sf::RenderTarget* screen_surface)
