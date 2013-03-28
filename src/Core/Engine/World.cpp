@@ -30,6 +30,8 @@
 #include <Engine/Body.h>
 
 World::World()
+: m_bodies()
+, m_terrain(0)
 {
 }
 
@@ -63,3 +65,8 @@ bool World::checkBodyCollision(Body* body)
 	return ret;
 
 }
+
+void World::setTerrain(Terrain* terrain)
+{
+}
+

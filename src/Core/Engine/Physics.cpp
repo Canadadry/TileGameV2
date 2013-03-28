@@ -62,29 +62,21 @@ void  Physics::update(World& world)
 
 
 	//moving body if it's possible
-	m_entity->body()->x += velocityX;
-	m_entity->body()->y += velocityY;
+	sf::Vector2f old_pos = m_entity->body()->position();
+	m_entity->body()->setPosition(old_pos + sf::Vector2f(velocityX,velocityY));
 
 	if(world.checkBodyCollision(m_entity->body()))
 	{
-		m_entity->body()->x -= velocityX;
-		m_entity->body()->y -= velocityY;
+		m_entity->body()->setPosition(old_pos);
 		velocityX *= -1;
 		velocityY *= -1;
 	}
-
-
-	if(      m_entity->body()->x <  0  ) m_entity->body()->x = 800;
-	else if( m_entity->body()->x > 800 ) m_entity->body()->x = 0;
-
-	if(      m_entity->body()->y <  0  ) m_entity->body()->y = 600;
-	else if( m_entity->body()->y > 600 ) m_entity->body()->y = 0;
 
 }
 
 void  Physics::thrust(float power)
 {
-	velocityX += sin(-m_entity->body()->angle) * power;
-	velocityY += cos(-m_entity->body()->angle) * power;
+//	velocityX += sin(-m_entity->body()->angle) * power;
+//	velocityY += cos(-m_entity->body()->angle) * power;
 }
 

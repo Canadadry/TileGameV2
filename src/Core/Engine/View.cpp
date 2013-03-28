@@ -55,8 +55,8 @@ void View::update()
 {
 	if(m_entity->body())
 	{
-		m_transformable.setRotation(m_entity->body()->angle/PI*180.0 );
-		m_transformable.setPosition(m_entity->body()->x,m_entity->body()->y);
+//		m_transformable.setRotation(m_entity->body()->angle/PI*180.0 );
+		m_transformable.setPosition(m_entity->body()->position());
 #ifdef __DEBUG_DRAW__
 		m_debugDraw->setRadius(m_entity->body()->radius);
 		m_debugDraw->setOrigin(m_entity->body()->radius,m_entity->body()->radius);

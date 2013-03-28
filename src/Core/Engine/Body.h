@@ -29,6 +29,9 @@
 #ifndef BODY_H_
 #define BODY_H_
 
+#include <SFML/System/Vector2.hpp>
+#include  <SFML/Graphics/Rect.hpp>
+
 class Entity;
 class Body;
 
@@ -44,21 +47,26 @@ public:
 	Body(Entity* entity);
 	virtual ~Body();
 
-	bool intersects(const Body& body);
+	void setOrigin(sf::Vector2f origin);
+	void setPosition(sf::Vector2f position);
+	void setSize(sf::Vector2f size);
+	sf::Vector2f position() const;
+
+	bool intersects(const Body& body) const;
 	bool handleCollision(Body* body);
 
-	float  x;
-	float  y;
-	float  angle;
-	float  radius;
 	int    type;
-	CollisionHandler* collisionHandler;
 
+	CollisionHandler* collisionHandler;
 
 	Entity* entity();
 
 private:
 	Entity* m_entity;
+	sf::FloatRect m_aabb;
+	sf::Vector2f m_origin;
+	sf::Vector2f m_computedPosition;
+
 
 
 };

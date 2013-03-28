@@ -30,13 +30,12 @@
 #include <cmath>
 
 Body::Body(Entity* entity)
-: x       (0.0)
-, y       (0.0)
-, angle   (0.0)
-, radius  (0.0)
-, type    (0)
+: type    (0)
 , collisionHandler(0)
 , m_entity(entity)
+, m_aabb(0.0,0.0,0.0,0.0)
+, m_origin(0.0,0.0)
+, m_computedPosition(0.0,0.0)
 {
 }
 
@@ -49,13 +48,39 @@ Entity* Body::entity()
 	return m_entity;
 }
 
-bool Body::intersects(const Body& body)
+void Body::setOrigin(sf::Vector2f origin)
 {
-	 float dx = x - body.x;
-	 float dy = y - body.y;
-
-	 return  sqrt((dx * dx) + (dy * dy)) <= radius + body.radius;
+	sf::Vector2f pos = position();
+	m_origin = origin;
+	setPosition(pos);
 }
+
+void Body::setPosition(sf::Vector2f position)
+{
+	m_aabb.left = position.x - m_origin.x;
+	m_aabb.top  = position.y - m_origin.y;
+
+	m_computedPosition = position;
+}
+
+void Body::setSize(sf::Vector2f size)
+{
+	m_aabb.width = size.x;
+	m_aabb.height = size.y;
+}
+
+sf::Vector2f Body::position() const
+{
+	return m_computedPosition;
+}
+
+bool Body::intersects(const Body& body)const
+{
+	sf::FloatRect intersection;
+	return m_aabb.intersects(body.m_aabb,intersection);
+}
+
+
 
 
 bool Body::handleCollision(Body* body)

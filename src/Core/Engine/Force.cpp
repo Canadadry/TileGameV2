@@ -66,8 +66,8 @@ void Attraction::affectEntity(Entity* entity)
 			const float max_speed = 3.0f; // pixel per cycle (16ms)
 			const float max_force = 1.0f; // pixel per cycle per cycle (16ms)
 
-			float desired_velocityX = (origin->x - entity->body()->x);
-			float desired_velocityY = (origin->y - entity->body()->y);
+			float desired_velocityX = (origin->position().x - entity->body()->position().x);
+			float desired_velocityY = (origin->position().y - entity->body()->position().y);
 			float norme  = sqrt(desired_velocityX*desired_velocityX + desired_velocityY*desired_velocityY);
 			desired_velocityX *= max_speed / norme;
 			desired_velocityY *= max_speed / norme;

@@ -31,6 +31,15 @@
 #include <list>
 
 class Body;
+
+class Terrain{
+public :
+	virtual ~Terrain(){}
+	virtual bool isColliding(Body* body){return false;}
+
+};
+
+
 class World
 {
 public:
@@ -39,9 +48,11 @@ public:
 	void addBody(Body* body);
 	void removeBody(Body* body);
 	bool checkBodyCollision(Body* body);
+	void setTerrain(Terrain* terrain);
 
 protected:
     std::list<Body*>    m_bodies;
+    Terrain* m_terrain;
 };
 
 #endif /* WORLD_H_ */
