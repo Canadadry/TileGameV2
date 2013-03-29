@@ -1,7 +1,7 @@
 /*
- * Body.h
+ * TileMapTerrain.h
  *
- * Asteroid - Copyright (c) 12 févr. 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 28 mars 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,53 +23,28 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 12 févr. 2013
+ *  Created on: 28 mars 2013
  */
 
-#ifndef BODY_H_
-#define BODY_H_
+#ifndef TILEMAPTERRAIN_H_
+#define TILEMAPTERRAIN_H_
 
-#include <SFML/System/Vector2.hpp>
-#include  <SFML/Graphics/Rect.hpp>
+#include <Engine/World.h>
 
-class Entity;
-class Body;
-
-class CollisionHandler{
-public:
-	virtual ~CollisionHandler(){}
-	virtual bool HandleCollision(Body* body) = 0;
-};
-
-class Body
+class TileMapTerrain : public Terrain
 {
 public:
-	Body(Entity* entity);
-	virtual ~Body();
+	TileMapTerrain();
+	virtual ~TileMapTerrain();
+	bool isColliding(Body* body);
 
-	void setOrigin(sf::Vector2f origin);
-	void setPosition(sf::Vector2f position);
-	void setSize(sf::Vector2f size);
-	sf::Vector2f position() const;
-	sf::Vector2f size() const;
+	char* data;
+	int width_in_tile;
+	int height_in_tile;
+	int tile_size;
 
-	bool intersects(const Body& body) const;
-	bool handleCollision(Body* body);
-
-	int    type;
-
-	CollisionHandler* collisionHandler;
-
-	Entity* entity();
-
-private:
-	Entity* m_entity;
-	sf::FloatRect m_aabb;
-	sf::Vector2f m_origin;
-	sf::Vector2f m_computedPosition;
-
-
+private:  bool isSolide(float x,float y);
 
 };
 
-#endif /* BODY_H_ */
+#endif /* TILEMAPTERRAIN_H_ */

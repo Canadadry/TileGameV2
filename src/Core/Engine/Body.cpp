@@ -43,6 +43,11 @@ Body::~Body()
 {
 }
 
+sf::Vector2f Body::size() const
+{
+	return sf::FloatRect(m_aabb.width,m_aabb.height);
+}
+
 Entity* Body::entity()
 {
 	return m_entity;
