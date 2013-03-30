@@ -26,14 +26,97 @@
  *  Created on: 24 mars 2013
  */
 
+#include "Player.h"
 #include "TileGame.h"
+#include <Loader/Scene2D.h>
+#include <Graphics/DrawableGroupe.h>
+#include <Graphics/TileMap.h>
+#include <Engine/RessourceManager.h>
+#include "TileMapTerrain.h"
+#include <Engine/Force.h>
+#include <Engine/Physics.h>
+
+#include <SFML/Graphics.hpp>
+
+Player* player = 0;
+Attraction* attarction = 0;
 
 TileGame::TileGame(int window_width ,int window_height )
 : Game(window_width ,window_height)
+, m_width_in_tile(0)
+, m_height_in_tile(0)
+, m_terrain(new TileMapTerrain)
+, m_scene2D(0)
 {
 }
 
 TileGame::~TileGame()
 {
 }
+
+void TileGame::render(sf::RenderTarget* screen_surface)
+{
+	screen_surface->draw(m_map);
+	Game::render(screen_surface);
+}
+
+void TileGame::update(int elapsedTimeMS)
+{
+	sf::Vector2i pos = sf::Mouse::getPosition(*Screen::window());
+	attarction->origin.x = pos.x;
+	attarction->origin.y = pos.y;
+	Game::update(elapsedTimeMS);
+}
+
+void TileGame::entering()
+{
+	m_scene2D = new Scene2D(RessourceManager::ressourcesDir+"/level_fat.tmx");
+	if(!m_scene2D->loadSuccessfull()) return ;
+
+	m_width_in_tile = m_scene2D->width_in_tile;
+	m_height_in_tile = m_scene2D->height_in_tile;
+
+	//m_map.setPosition(window_width*m_scene2D->tile_size/2, window_height*m_scene2D->tile_size/2);
+
+	m_tilesets.reserve(m_scene2D->tilesetName.size());
+	for(unsigned int i=0;i<m_scene2D->tilesetName.size();i++)
+	{
+		sf::Texture* text = RessourceManager::texture().load("/"+m_scene2D->tilesetName[i]);
+		printf("loading texture %s (%dp,%dp)\n",m_scene2D->tilesetName[i].c_str(),text->getSize().x,text->getSize().y);
+
+		m_tilesets.push_back(text);
+	}
+
+	m_tilemap.reserve(m_scene2D->layers.size());
+	for(unsigned int i=0;i<m_scene2D->layers.size();i++)
+	{
+
+		Scene2D::Layer& layer = *m_scene2D->layers[i];
+		sf::Texture& tileset = *m_tilesets[layer.tilesetId];
+
+		printf("new layer found of (%d,%d) tiles (size : %d) using tileset %d\n",
+				m_scene2D->width_in_tile,m_scene2D->height_in_tile,m_scene2D->tile_size,layer.tilesetId);
+
+		TileMap* map = new TileMap();
+		map->setTileSet(tileset,tileset.getSize().x/m_scene2D->tile_size,tileset.getSize().y/m_scene2D->tile_size);
+		map->setData(m_scene2D->width_in_tile,m_scene2D->height_in_tile,(const unsigned int*)&(layer.data[0]));
+
+		m_tilemap.push_back(map);
+
+		m_map.push_back(map);
+	}
+
+	m_world.setTerrain(m_terrain);
+	m_terrain->data = &(m_scene2D->collision[0]);
+	m_terrain->width_in_tile = m_scene2D->width_in_tile;
+	m_terrain->height_in_tile = m_scene2D->height_in_tile;
+
+	addEntity(player = new Player());
+	attarction = new Attraction;
+	player->physics()->forces.push_back(attarction);
+
+
+}
+
+
 

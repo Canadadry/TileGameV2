@@ -100,7 +100,7 @@ private:
 	T*   createRessources(const std::string &filePath)
 	{
 		T* ressouce = new T;
-		if(ressouce->loadFromFile(filePath))
+		if(ressouce->loadFromFile(RessourceManager::ressourcesDir+filePath))
 		{
 			m_ressources.insert(std::pair<std::string, T*>(filePath, ressouce));
 			return ressouce;

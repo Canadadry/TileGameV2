@@ -4,6 +4,7 @@
 #include <string>
 
 namespace sf{
+	class RenderWindow;
 class RenderTarget;
 class Event;
 }
@@ -15,6 +16,9 @@ public:
 
 	virtual ~Screen();
 	static void mainLoop(Screen* first_screen,std::string gameName = "MyFabulousGame",int window_width = 800,int window_height = 600);
+	static Screen* current();
+	static sf::RenderWindow* window();
+
 
 protected:
 
@@ -31,6 +35,8 @@ protected:
 
 private:
 
+	static Screen* m_current;
+	static sf::RenderWindow* m_window;
 	bool myScreenIsFinished;
 	Screen *myNextScreen;
 

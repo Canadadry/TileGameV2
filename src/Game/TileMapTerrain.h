@@ -38,7 +38,7 @@ public:
 	virtual ~TileMapTerrain();
 	bool isColliding(Body* body);
 
-	char* data;
+	int* data;
 	int width_in_tile;
 	int height_in_tile;
 	int tile_size;

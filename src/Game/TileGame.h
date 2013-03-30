@@ -30,12 +30,41 @@
 #define TILEGAME_H_
 
 #include <Engine/Game.h>
+#include <Graphics/DrawableGroupe.h>
+
+class Scene2D;
+class TileMap;
+class TileMapTerrain;
+namespace sf{
+	class Texture;
+	class RenderTexture;
+	class Shape;
+}
 
 class TileGame : public Game
 {
 public:
 	TileGame(int window_width = 800,int window_height = 600 );
 	virtual ~TileGame();
+
+	virtual void render(sf::RenderTarget* screen_surface);
+    virtual void update(int elapsedTimeMS) ;
+
+	int m_width_in_tile;
+	int m_height_in_tile;
+
+	TileMapTerrain* m_terrain;
+	Scene2D* m_scene2D;
+	sf::Shape* m_shape;
+	Body* trackingPoint;
+
+	DrawableGroupe m_map;
+
+	std::vector<sf::Texture*> m_tilesets;
+	std::vector<TileMap*> m_tilemap;
+protected:
+	virtual void entering() ;
+
 };
 
 #endif /* TILEGAME_H_ */

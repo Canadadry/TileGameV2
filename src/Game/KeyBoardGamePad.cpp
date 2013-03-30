@@ -1,7 +1,7 @@
 /*
- * Force.h
+ * KeyBoardGamePad.cpp
  *
- * Asteroid - Copyright (c) 3 mars 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 29 mars 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,52 +23,48 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 3 mars 2013
+ *  Created on: 29 mars 2013
  */
 
-#ifndef FORCE_H_
-#define FORCE_H_
+#include "KeyBoardGamePad.h"
 
-#include <SFML/System/Vector2.hpp>
-
-class Entity;
-class Body;
-
-class Force
+KeyBoardGamePad::KeyBoardGamePad(Entity* entity)
+: GamePad(entity)
 {
-public:
-	Force();
-	virtual ~Force();
-	virtual void affectEntity(Entity* entity) = 0;
-};
+}
 
-//classical Forces :
-
-class Friction : public Force
+KeyBoardGamePad::~KeyBoardGamePad()
 {
-public:
-	Friction();
-	virtual ~Friction();
-	virtual void affectEntity(Entity* entity);
+}
 
-	double drag;
-};
-
-
-class Attraction : public Force
+void KeyBoardGamePad::handleEvent(const sf::Event& Event)
 {
-public:
-	Attraction();
-	virtual ~Attraction();
-	virtual void affectEntity(Entity* entity);
+}
 
-	sf::Vector2f origin;
-	double power;
+void KeyBoardGamePad::update()
+{
+//	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+//	{
+//		m_entity->body()->angle -= 0.04;
+//	}
+//	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+//	{
+//		m_entity->body()->angle += 0.04;
+//	}
+//	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+//	{
+//		m_entity->physics()->thrust(-0.4);
+//	}
+//	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+//	{
+//		m_entity->physics()->thrust(0.4);
+//	}
+//
+//	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+//	{
+//		m_entity->weapon()->fire();
+//	}
 
-};
+}
 
 
-
-
-
-#endif /* FORCE_H_ */

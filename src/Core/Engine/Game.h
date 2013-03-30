@@ -64,13 +64,14 @@ protected:
     void onEntityDestroyed(Entity* entity);
     void clear();
 
+    World               m_world;
+
 private:
     std::list<Entity*>  m_entities_to_destroyed;
     std::list<Entity*>  m_entities;
     std::list<View*>    m_views;
     std::list<GamePad*> m_gamepads;
     std::list<Physics*> m_physics;
-    World               m_world;
 
 	int m_window_width;
 	int m_window_height;

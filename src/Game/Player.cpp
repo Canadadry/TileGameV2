@@ -1,7 +1,7 @@
 /*
- * Force.h
+ * Player.cpp
  *
- * Asteroid - Copyright (c) 3 mars 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 30 mars 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,52 +23,41 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 3 mars 2013
+ *  Created on: 30 mars 2013
  */
 
-#ifndef FORCE_H_
-#define FORCE_H_
+#include "Player.h"
+#include <Engine/Body.h>
+#include <Engine/Physics.h>
+#include <Engine/View.h>
+#include <Engine/RessourceManager.h>
 
-#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 
-class Entity;
-class Body;
 
-class Force
+
+Player::Player()
+: Entity()
+//, m_sprite(new sf::Sprite )
 {
-public:
-	Force();
-	virtual ~Force();
-	virtual void affectEntity(Entity* entity) = 0;
-};
 
-//classical Forces :
+	setBody(new Body(this));
+	body()->setSize(sf::Vector2f(16,16));
+	body()->setOrigin(sf::Vector2f(8,8));
+	body()->setPosition(sf::Vector2f(38,38));
 
-class Friction : public Force
+	setPhysics(new Physics(this));
+
+	setView(new View(this));
+	sf::RectangleShape* shape  = new sf::RectangleShape(sf::Vector2f(16,16));
+	shape->setOrigin(sf::Vector2f(8,8));
+	shape->setFillColor(sf::Color::Red);
+	view()->drawable = shape;
+
+
+}
+
+Player::~Player()
 {
-public:
-	Friction();
-	virtual ~Friction();
-	virtual void affectEntity(Entity* entity);
+}
 
-	double drag;
-};
-
-
-class Attraction : public Force
-{
-public:
-	Attraction();
-	virtual ~Attraction();
-	virtual void affectEntity(Entity* entity);
-
-	sf::Vector2f origin;
-	double power;
-
-};
-
-
-
-
-
-#endif /* FORCE_H_ */

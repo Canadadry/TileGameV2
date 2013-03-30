@@ -1,7 +1,7 @@
 /*
- * Force.h
+ * Player.h
  *
- * Asteroid - Copyright (c) 3 mars 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 30 mars 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,52 +23,20 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 3 mars 2013
+ *  Created on: 30 mars 2013
  */
 
-#ifndef FORCE_H_
-#define FORCE_H_
+#ifndef PLAYER_H_
+#define PLAYER_H_
 
-#include <SFML/System/Vector2.hpp>
+#include <Engine/Entity.h>
 
-class Entity;
-class Body;
-
-class Force
+class Player : public Entity
 {
 public:
-	Force();
-	virtual ~Force();
-	virtual void affectEntity(Entity* entity) = 0;
-};
-
-//classical Forces :
-
-class Friction : public Force
-{
-public:
-	Friction();
-	virtual ~Friction();
-	virtual void affectEntity(Entity* entity);
-
-	double drag;
-};
-
-
-class Attraction : public Force
-{
-public:
-	Attraction();
-	virtual ~Attraction();
-	virtual void affectEntity(Entity* entity);
-
-	sf::Vector2f origin;
-	double power;
+	Player();
+	virtual ~Player();
 
 };
 
-
-
-
-
-#endif /* FORCE_H_ */
+#endif /* PLAYER_H_ */
