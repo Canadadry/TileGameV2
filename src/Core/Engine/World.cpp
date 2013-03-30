@@ -53,12 +53,16 @@ typedef std::list<Body*>::iterator bIter;
 bool World::checkBodyCollision(Body* body)
 {
 	bool ret = false;
+	if(m_terrain)
+	{
+		ret = ret || m_terrain->isColliding(body);
+	}
 	for(bIter it = m_bodies.begin() ; it != m_bodies.end() ; it++ )
 	{
 		if(body == *it) continue;
 		if( body->intersects(**it))
 		{
-			ret = ret | body->handleCollision(*it);
+			ret = ret ||  body->handleCollision(*it);
 		}
 	}
 
@@ -68,5 +72,6 @@ bool World::checkBodyCollision(Body* body)
 
 void World::setTerrain(Terrain* terrain)
 {
+	m_terrain = terrain;
 }
 

@@ -43,14 +43,14 @@ Player::Player()
 
 	setBody(new Body(this));
 	body()->setSize(sf::Vector2f(16,16));
-	body()->setOrigin(sf::Vector2f(8,8));
+	//body()->setOrigin(sf::Vector2f(8,8));
 	body()->setPosition(sf::Vector2f(38,38));
 
 	setPhysics(new Physics(this));
 
 	setView(new View(this));
 	sf::RectangleShape* shape  = new sf::RectangleShape(sf::Vector2f(16,16));
-	shape->setOrigin(sf::Vector2f(8,8));
+	//shape->setOrigin(sf::Vector2f(8,8));
 	shape->setFillColor(sf::Color::Red);
 	view()->drawable = shape;
 

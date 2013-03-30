@@ -110,9 +110,11 @@ void TileGame::entering()
 	m_terrain->data = &(m_scene2D->collision[0]);
 	m_terrain->width_in_tile = m_scene2D->width_in_tile;
 	m_terrain->height_in_tile = m_scene2D->height_in_tile;
+	m_terrain->tile_size = m_scene2D->tile_size;
 
 	addEntity(player = new Player());
 	attarction = new Attraction;
+	attarction->power = 10.0;
 	player->physics()->forces.push_back(attarction);
 
 

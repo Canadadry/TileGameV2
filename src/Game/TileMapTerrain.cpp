@@ -33,7 +33,7 @@ TileMapTerrain::TileMapTerrain()
 : data(0)
 , width_in_tile(0)
 , height_in_tile(0)
-, tile_size(0)
+, tile_size(1)
 {}
 
 TileMapTerrain::~TileMapTerrain()
@@ -57,12 +57,12 @@ bool TileMapTerrain::isColliding(Body* body)
 bool TileMapTerrain::isSolide(float x, float y)
 {
 	bool ret = false;
-	int id_x = x/tile_size;
-	int id_y = y/tile_size;
+	int id_x = x/(float)tile_size;
+	int id_y = y/(float)tile_size;
 
-	if(id_x > 0 && id_x < width_in_tile)
+	if(id_x >= 0 && id_x < width_in_tile)
 	{
-		if(id_y > 0 && id_y < height_in_tile)
+		if(id_y >= 0 && id_y < height_in_tile)
 		{
 			ret = data[id_x+width_in_tile*id_y] > 0;
 		}
