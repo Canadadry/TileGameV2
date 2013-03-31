@@ -35,6 +35,8 @@ MoveForce::MoveForce()
 , moveLeft(false)
 , moveRight(false)
 , jump(false)
+, m_jump_force(0.0)
+, m_move_force(0.0)
 {
 }
 
@@ -45,46 +47,53 @@ MoveForce::~MoveForce()
 void MoveForce::affectEntity(Entity* entity)
 {
 	bool* corners = entity->physics()->contact;
-
 	bool isOnFloor = corners[Physics::BottomLeft] || corners[Physics::BottomRight];
 
-	static int i=0;
 	if(moveLeft)
 	{
 		if(isOnFloor)
 		{
-			entity->physics()->forceX -= 30;
+				m_move_force = -30;
 		}
 		else
 		{
-			entity->physics()->forceX -= 10;
+			m_move_force = -10;
 		}
 
 	}
-	if(moveRight)
+	else if(moveRight)
 	{
 		if( isOnFloor)
 		{
-			entity->physics()->forceX += 30;
+			m_move_force = 30;
 		}
 		else
 		{
-			entity->physics()->forceX += 10;
+			m_move_force = 10;
 		}
+	}
+	else
+	{
+		m_move_force/=2;
 	}
 	if(jump)
 	{
 		if( isOnFloor)
 		{
-			i = 10;
-			entity->physics()->forceY -= 10*i;
+			m_jump_force = -100;
 		}
-		else if(i>0)
+		else if(m_jump_force<=0)
 		{
-			i--;
-			entity->physics()->forceY -= 10*i;
+			m_jump_force += 10;
 		}
 	}
+	else
+	{
+		m_jump_force =0;
+	}
+
+	entity->physics()->forceX += m_move_force;
+	entity->physics()->forceY += m_jump_force;
 
 
 }

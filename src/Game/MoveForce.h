@@ -43,6 +43,10 @@ public:
 	bool moveRight;
 	bool jump;
 
+private:
+	float m_jump_force;
+	float m_move_force;
+
 };
 
 #endif /* MOVEFORCE_H_ */
