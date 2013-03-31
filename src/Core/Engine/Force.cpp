@@ -33,6 +33,8 @@
 
 #include <cmath>
 
+#define PI 3.1415926535
+
 Force::Force()
 {
 }
@@ -52,49 +54,64 @@ void Friction::affectEntity(Entity* entity)
 	entity->physics()->velocityY *= entity->physics()->drag;
 }
 
-Attraction::Attraction()
+AttractionPoint::AttractionPoint()
 : origin()
 , power(1.0)
 {}
 
-Attraction::~Attraction(){}
+AttractionPoint::~AttractionPoint(){}
 
-void Attraction::affectEntity(Entity* entity)
+void AttractionPoint::affectEntity(Entity* entity)
 {
-//	if( origin != 0)
-		{
-			const float max_speed = 3.0f; // pixel per cycle (16ms)
-			const float max_force = 1.0f; // pixel per cycle per cycle (16ms)
 
-			float desired_velocityX = (origin.x - entity->body()->position().x);
-			float desired_velocityY = (origin.y - entity->body()->position().y);
-			float norme  = sqrt(desired_velocityX*desired_velocityX + desired_velocityY*desired_velocityY);
-			desired_velocityX *= max_speed / norme;
-			desired_velocityY *= max_speed / norme;
+	float desired_velocityX = (origin.x - entity->body()->position().x);
+	float desired_velocityY = (origin.y - entity->body()->position().y);
+	float norme  = sqrt(desired_velocityX*desired_velocityX + desired_velocityY*desired_velocityY);
+	desired_velocityX /= norme;
+	desired_velocityY /= norme;
+
+    float speed_norme  = sqrt(entity->physics()->velocityX*entity->physics()->velocityX
+    		                + entity->physics()->velocityY*entity->physics()->velocityY);
+    if(speed_norme == 0 )speed_norme = 1.0;
+	float steeringX = desired_velocityX - entity->physics()->velocityX/speed_norme;
+	float steeringY = desired_velocityY - entity->physics()->velocityY/speed_norme;
+	      norme  = sqrt(steeringX*steeringX + steeringY*steeringY);
+
+	steeringX *= power / norme;
+	steeringY *= power / norme;
+
+	entity->physics()->forceX += steeringX;
+	entity->physics()->forceY += steeringY;
+
+}
+
+AttractionDirection::AttractionDirection()
+: angleDirection()
+, power(1.0)
+{}
+
+AttractionDirection::~AttractionDirection(){}
+
+void AttractionDirection::affectEntity(Entity* entity)
+{
+
+	float desired_velocityX = cos(angleDirection/180.0 * PI) ;
+	float desired_velocityY = sin(angleDirection/180.0 * PI) ;
+
+    float speed_norme  = sqrt(entity->physics()->velocityX*entity->physics()->velocityX
+    		                + entity->physics()->velocityY*entity->physics()->velocityY);
+
+    if(speed_norme == 0 )speed_norme = 1.0;
+	float steeringX = desired_velocityX - entity->physics()->velocityX/speed_norme;
+	float steeringY = desired_velocityY - entity->physics()->velocityY/speed_norme;
+    float norme  = sqrt(steeringX*steeringX + steeringY*steeringY);
+
+	steeringX *= power / norme;
+	steeringY *= power / norme;
 
 
-			float steeringX = desired_velocityX - entity->physics()->velocityX;
-			float steeringY = desired_velocityY - entity->physics()->velocityY;
+	entity->physics()->forceX += steeringX;
+	entity->physics()->forceY += steeringY;
 
-			norme  = sqrt(steeringX*steeringX + steeringY*steeringY);
-			if(norme > max_force)
-			{
-				steeringX *= max_force / norme;
-				steeringY *= max_force / norme;
-			}
-
-			steeringX *= power;
-			steeringY *= power;
-
-			entity->physics()->velocityX += steeringX;
-			entity->physics()->velocityY += steeringY;
-
-			norme  = sqrt(entity->physics()->velocityX*entity->physics()->velocityX + entity->physics()->velocityY*entity->physics()->velocityY);
-			if(norme > max_speed)
-			{
-				entity->physics()->velocityX *= max_speed / norme;
-				entity->physics()->velocityY *= max_speed / norme;
-			}
-		}
 
 }

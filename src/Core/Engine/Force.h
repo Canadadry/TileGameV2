@@ -55,11 +55,11 @@ public:
 };
 
 
-class Attraction : public Force
+class AttractionPoint : public Force
 {
 public:
-	Attraction();
-	virtual ~Attraction();
+	AttractionPoint();
+	virtual ~AttractionPoint();
 	virtual void affectEntity(Entity* entity);
 
 	sf::Vector2f origin;
@@ -67,7 +67,17 @@ public:
 
 };
 
+class AttractionDirection : public Force
+{
+public:
+	AttractionDirection();
+	virtual ~AttractionDirection();
+	virtual void affectEntity(Entity* entity);
 
+	double angleDirection;
+	double power;
+
+};
 
 
 

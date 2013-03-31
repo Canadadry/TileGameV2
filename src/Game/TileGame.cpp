@@ -39,7 +39,7 @@
 #include <SFML/Graphics.hpp>
 
 Player* player = 0;
-Attraction* attarction = 0;
+AttractionPoint* attarction = 0;
 
 TileGame::TileGame(int window_width ,int window_height )
 : Game(window_width ,window_height)
@@ -65,6 +65,10 @@ void TileGame::update(int elapsedTimeMS)
 	sf::Vector2i pos = sf::Mouse::getPosition(*Screen::window());
 	attarction->origin.x = pos.x;
 	attarction->origin.y = pos.y;
+
+	bool isPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	attarction->power = isPressed ? 15.0 : 0.0;
+
 	Game::update(elapsedTimeMS);
 }
 
@@ -113,10 +117,14 @@ void TileGame::entering()
 	m_terrain->tile_size = m_scene2D->tile_size;
 
 	addEntity(player = new Player());
-	attarction = new Attraction;
-	attarction->power = 10.0;
+	attarction = new AttractionPoint;
+	attarction->power = 15.0;
 	player->physics()->forces.push_back(attarction);
 
+	AttractionDirection* gravity = new AttractionDirection;
+	gravity->power = 100.0;
+	gravity->angleDirection = 90.0;
+	player->physics()->forces.push_back(gravity);
 
 }
 

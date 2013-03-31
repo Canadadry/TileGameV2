@@ -52,6 +52,9 @@ public:
 	float   velocityX;
 	float   velocityY;
 
+	float   forceX;
+	float   forceY;
+
 private:
 	Entity* m_entity;
 	Friction* m_friction;

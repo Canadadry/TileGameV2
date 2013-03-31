@@ -55,9 +55,37 @@ Physics::~Physics()
 void  Physics::update(World& world)
 {
 	// apply forces
+
+	const float max_speed = 3.0f; // pixel per cycle (16ms)
+	const float max_force = 10.0f; // pixel per cycle per cycle (16ms)
+
+	forceX = 0;
+	forceY = 0;
+
+//	printf("before - velocity %f,%f\n",velocityX,velocityY);
+//	int i=0;
 	for(Force_it it = forces.begin(); it != forces.end();it++)
 	{
 		(*it)->affectEntity(m_entity);
+//		printf("after %d- velocity %f,%f\n",i++,velocityX,velocityY);
+	}
+
+	double norme  = sqrt(forceX*forceX + forceY*forceY);
+	if(norme > max_force)
+	{
+		forceX    *= max_force / norme;
+		forceY    *= max_force / norme;
+	}
+
+
+	velocityX += forceX;
+	velocityY += forceY;
+
+	norme  = sqrt(velocityX*velocityX + velocityY*velocityY);
+	if(norme > max_speed)
+	{
+		velocityX *= max_speed / norme;
+		velocityY *= max_speed / norme;
 	}
 
 
@@ -68,8 +96,8 @@ void  Physics::update(World& world)
 	if(world.checkBodyCollision(m_entity->body()))
 	{
 		m_entity->body()->setPosition(old_pos);
-		velocityX *= -1;
-		velocityY *= -1;
+		velocityX *= 0;
+		velocityY *= 0;
 	}
 
 }
