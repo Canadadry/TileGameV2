@@ -28,6 +28,8 @@
 
 #include "TileMapTerrain.h"
 #include <Engine/Body.h>
+#include <Engine/Physics.h>
+#include <Engine/Entity.h>
 
 TileMapTerrain::TileMapTerrain()
 : data(0)
@@ -46,10 +48,12 @@ bool TileMapTerrain::isColliding(Body* body)
 	sf::Vector2f position = body->position();
 	sf::Vector2f size     = body->size();
 
-	ret |= isSolide(position.x       ,position.y       );
-	ret |= isSolide(position.x+size.x,position.y       );
-	ret |= isSolide(position.x+size.x,position.y+size.y);
-	ret |= isSolide(position.x       ,position.y+size.y);
+	bool* corners = body->entity()->physics()->contact;
+
+	ret |= corners[Physics::TopLeft    ] = isSolide(position.x       ,position.y       );
+	ret |= corners[Physics::TopRight   ] = isSolide(position.x+size.x,position.y       );
+	ret |= corners[Physics::BottomLeft ] = isSolide(position.x+size.x,position.y+size.y);
+	ret |= corners[Physics::BottomRight] = isSolide(position.x       ,position.y+size.y);
 
 	return ret;
 }

@@ -37,9 +37,11 @@
 #include <Engine/Physics.h>
 
 #include <SFML/Graphics.hpp>
+#include "MoveForce.h"
 
 Player* player = 0;
 AttractionPoint* attarction = 0;
+MoveForce* move;
 
 TileGame::TileGame(int window_width ,int window_height )
 : Game(window_width ,window_height)
@@ -62,12 +64,17 @@ void TileGame::render(sf::RenderTarget* screen_surface)
 
 void TileGame::update(int elapsedTimeMS)
 {
-	sf::Vector2i pos = sf::Mouse::getPosition(*Screen::window());
-	attarction->origin.x = pos.x;
-	attarction->origin.y = pos.y;
+//	sf::Vector2i pos = sf::Mouse::getPosition(*Screen::window());
+//	attarction->origin.x = pos.x;
+//	attarction->origin.y = pos.y;
+//
+//	bool isPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+//	attarction->power = isPressed ? 15.0 : 0.0;
 
-	bool isPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-	attarction->power = isPressed ? 15.0 : 0.0;
+
+	move->moveLeft  =sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+	move->moveRight =sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+	move->jump      =sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
 	Game::update(elapsedTimeMS);
 }
@@ -117,12 +124,16 @@ void TileGame::entering()
 	m_terrain->tile_size = m_scene2D->tile_size;
 
 	addEntity(player = new Player());
-	attarction = new AttractionPoint;
-	attarction->power = 15.0;
-	player->physics()->forces.push_back(attarction);
+
+//	attarction = new AttractionPoint;
+//	attarction->power = 15.0;
+//	player->physics()->forces.push_back(attarction);
+
+	move = new MoveForce;
+	player->physics()->forces.push_back(move);
 
 	AttractionDirection* gravity = new AttractionDirection;
-	gravity->power = 100.0;
+	gravity->power = 10.0;
 	gravity->angleDirection = 90.0;
 	player->physics()->forces.push_back(gravity);
 

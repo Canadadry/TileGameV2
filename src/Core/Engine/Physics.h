@@ -40,6 +40,14 @@ class Friction;
 class Physics
 {
 public:
+	enum AABBCorner{
+		TopLeft = 0,
+		TopRight,
+		BottomLeft,
+		BottomRight,
+		Count
+	};
+
 	Physics(Entity* entity);
 	virtual ~Physics();
 
@@ -54,6 +62,8 @@ public:
 
 	float   forceX;
 	float   forceY;
+
+	bool contact[Count];
 
 private:
 	Entity* m_entity;

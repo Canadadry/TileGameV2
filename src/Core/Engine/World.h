@@ -29,6 +29,7 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 #include <list>
+#include <SFML/System/Vector2.hpp>
 
 class Body;
 
@@ -48,6 +49,7 @@ public:
 	void addBody(Body* body);
 	void removeBody(Body* body);
 	bool checkBodyCollision(Body* body);
+	bool isCollidingTerrain(Body* body);
 	void setTerrain(Terrain* terrain);
 
 protected:

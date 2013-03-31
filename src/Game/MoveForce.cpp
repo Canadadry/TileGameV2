@@ -1,7 +1,7 @@
 /*
- * World.cpp
+ * MoveForce.cpp
  *
- * Asteroid - Copyright (c) 16 févr. 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 31 mars 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,61 +23,69 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 16 févr. 2013
+ *  Created on: 31 mars 2013
  */
 
-#include "World.h"
-#include <Engine/Body.h>
+#include "MoveForce.h"
+#include <Engine/Entity.h>
+#include <Engine/Physics.h>
 
-World::World()
-: m_bodies()
-, m_terrain(0)
+MoveForce::MoveForce()
+: Force()
+, moveLeft(false)
+, moveRight(false)
+, jump(false)
 {
 }
 
-World::~World()
+MoveForce::~MoveForce()
 {
 }
 
-void World::addBody(Body* body)
+void MoveForce::affectEntity(Entity* entity)
 {
-	m_bodies.push_back(body);
-}
+	bool* corners = entity->physics()->contact;
 
-void World::removeBody(Body* body)
-{
-	m_bodies.remove(body);
-}
+	bool isOnFloor = corners[Physics::BottomLeft] || corners[Physics::BottomRight];
 
-typedef std::list<Body*>::iterator bIter;
-bool World::checkBodyCollision(Body* body)
-{
-	bool ret = false;
-	for(bIter it = m_bodies.begin() ; it != m_bodies.end() ; it++ )
+	static int i=0;
+	if(moveLeft)
 	{
-		if(body == *it) continue;
-		if( body->intersects(**it))
+		if(isOnFloor)
 		{
-			ret = ret ||  body->handleCollision(*it);
+			entity->physics()->forceX -= 30;
+		}
+		else
+		{
+			entity->physics()->forceX -= 10;
+		}
+
+	}
+	if(moveRight)
+	{
+		if( isOnFloor)
+		{
+			entity->physics()->forceX += 30;
+		}
+		else
+		{
+			entity->physics()->forceX += 10;
+		}
+	}
+	if(jump)
+	{
+		if( isOnFloor)
+		{
+			i = 10;
+			entity->physics()->forceY -= 10*i;
+		}
+		else if(i>0)
+		{
+			i--;
+			entity->physics()->forceY -= 10*i;
 		}
 	}
 
-	return ret;
 
-}
-
-bool World::isCollidingTerrain(Body* body)
-{
-	bool ret = false;
-	if(m_terrain)
-	{
-		ret = m_terrain->isColliding(body);
-	}
-	return ret;
-}
-
-void World::setTerrain(Terrain* terrain)
-{
-	m_terrain = terrain;
 }
 

@@ -1,7 +1,7 @@
 /*
- * World.cpp
+ * MoveForce.h
  *
- * Asteroid - Copyright (c) 16 févr. 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 31 mars 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,61 +23,26 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 16 févr. 2013
+ *  Created on: 31 mars 2013
  */
 
-#include "World.h"
-#include <Engine/Body.h>
+#ifndef MOVEFORCE_H_
+#define MOVEFORCE_H_
 
-World::World()
-: m_bodies()
-, m_terrain(0)
+#include <Engine/Force.h>
+
+class MoveForce :public Force
 {
-}
+public:
+	MoveForce();
+	virtual ~MoveForce();
+	virtual void affectEntity(Entity* entity) ;
 
-World::~World()
-{
-}
 
-void World::addBody(Body* body)
-{
-	m_bodies.push_back(body);
-}
+	bool moveLeft;
+	bool moveRight;
+	bool jump;
 
-void World::removeBody(Body* body)
-{
-	m_bodies.remove(body);
-}
+};
 
-typedef std::list<Body*>::iterator bIter;
-bool World::checkBodyCollision(Body* body)
-{
-	bool ret = false;
-	for(bIter it = m_bodies.begin() ; it != m_bodies.end() ; it++ )
-	{
-		if(body == *it) continue;
-		if( body->intersects(**it))
-		{
-			ret = ret ||  body->handleCollision(*it);
-		}
-	}
-
-	return ret;
-
-}
-
-bool World::isCollidingTerrain(Body* body)
-{
-	bool ret = false;
-	if(m_terrain)
-	{
-		ret = m_terrain->isColliding(body);
-	}
-	return ret;
-}
-
-void World::setTerrain(Terrain* terrain)
-{
-	m_terrain = terrain;
-}
-
+#endif /* MOVEFORCE_H_ */
