@@ -33,15 +33,12 @@
 #include <Graphics/TileMap.h>
 #include <Engine/RessourceManager.h>
 #include "TileMapTerrain.h"
-#include <Engine/Force.h>
 #include <Engine/Physics.h>
+#include <Engine/platform/PlatformPhysic.h>
 
 #include <SFML/Graphics.hpp>
-#include "MoveForce.h"
 
 Player* player = 0;
-AttractionPoint* attarction = 0;
-MoveForce* move;
 
 TileGame::TileGame(int window_width ,int window_height )
 : Game(window_width ,window_height)
@@ -72,11 +69,67 @@ void TileGame::update(int elapsedTimeMS)
 //	attarction->power = isPressed ? 15.0 : 0.0;
 
 
-	move->moveLeft  =sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-	move->moveRight =sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
-	move->jump      =sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+//	move->moveLeft  =sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+//	move->moveRight =sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+//	move->jump      =sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
 	Game::update(elapsedTimeMS);
+}
+
+void TileGame::handleEvent(const sf::Event& event)
+{
+	PlatformPhysic& physic = *(PlatformPhysic*)player->physics();
+	if(event.type == sf::Event::KeyPressed )
+	{
+		if(event.key.code == sf::Keyboard::Left)
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				physic.move(PlatformPhysic::LEFT);
+			}
+		}
+		else if(event.key.code == sf::Keyboard::C)
+		{
+			physic.running(true);
+		}
+		else if(event.key.code == sf::Keyboard::Right)
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				physic.move(PlatformPhysic::RIGHT);
+			}
+		}
+		else if(event.key.code == sf::Keyboard::Space)
+		{
+			physic.jump();
+		}
+	}
+	else if(event.type == sf::Event::KeyReleased)
+	{
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				physic.move(PlatformPhysic::LEFT);
+			}
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				physic.move(PlatformPhysic::RIGHT);
+			}
+		}
+		else if(event.key.code == sf::Keyboard::C)
+		{
+			physic.running(false);
+		}
+		else
+		{
+			physic.stop();
+		}
+	}
+
 }
 
 void TileGame::entering()
@@ -123,19 +176,23 @@ void TileGame::entering()
 	m_terrain->height_in_tile = m_scene2D->height_in_tile;
 	m_terrain->tile_size = m_scene2D->tile_size;
 
-	addEntity(player = new Player());
+	player = new Player();
+	PlatformPhysic* physics = new PlatformPhysic(player);
+	player->setPhysics(physics);
+
+	addEntity(player);
 
 //	attarction = new AttractionPoint;
 //	attarction->power = 15.0;
 //	player->physics()->forces.push_back(attarction);
 
-	move = new MoveForce;
-	player->physics()->forces.push_back(move);
-
-	AttractionDirection* gravity = new AttractionDirection;
-	gravity->power = 10.0;
-	gravity->angleDirection = 90.0;
-	player->physics()->forces.push_back(gravity);
+//	move = new MoveForce;
+//	player->physics()->forces.push_back(move);
+//
+//	AttractionDirection* gravity = new AttractionDirection;
+//	gravity->power = 10.0;
+//	gravity->angleDirection = 90.0;
+//	player->physics()->forces.push_back(gravity);
 
 }
 

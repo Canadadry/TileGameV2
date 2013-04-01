@@ -49,6 +49,7 @@ public:
 
 	virtual void render(sf::RenderTarget* screen_surface);
     virtual void update(int elapsedTimeMS) ;
+	virtual void handleEvent(const sf::Event& Event);
 
 	int m_width_in_tile;
 	int m_height_in_tile;

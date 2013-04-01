@@ -29,13 +29,12 @@
 #ifndef PHYSICS_H_
 #define PHYSICS_H_
 
-#include <list>
+#include <SFML/System/Vector2.hpp>
 
 class Entity;
 class World;
 class Body;
-class Force;
-class Friction;
+
 
 class Physics
 {
@@ -50,24 +49,15 @@ public:
 
 	Physics(Entity* entity);
 	virtual ~Physics();
+	void  update(World& world);
 
-	std::list<Force* > forces;
 
-	virtual void  update(World& world);
-	void  thrust(float power);
+protected:
+	virtual void updatedSpeed(){}
 
-	float   drag;
-	float   velocityX;
-	float   velocityY;
-
-	float   forceX;
-	float   forceY;
-
-	bool contact[Count];
-
-private:
 	Entity* m_entity;
-	Friction* m_friction;
+	sf::Vector2f m_speed;
+
 };
 
 #endif /* PHYSICS_H_ */

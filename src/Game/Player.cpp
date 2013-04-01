@@ -46,7 +46,7 @@ Player::Player()
 	//body()->setOrigin(sf::Vector2f(8,8));
 	body()->setPosition(sf::Vector2f(38,38));
 
-	setPhysics(new Physics(this));
+	//setPhysics(new Physics(this));
 
 	setView(new View(this));
 	sf::RectangleShape* shape  = new sf::RectangleShape(sf::Vector2f(16,16));

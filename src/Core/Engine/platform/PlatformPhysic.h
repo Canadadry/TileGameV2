@@ -1,7 +1,7 @@
 /*
- * MoveForce.h
+ * PlatformPhysic.h
  *
- * TileGameV2 - Copyright (c) 31 mars 2013 - Jerome Mourey
+ * TileGameV2 - Copyright (c) 1 avr. 2013 - Jerome Mourey
  *
  * This software is provided 'as-is', without any express or
  * implied warranty. In no event will the authors be held
@@ -23,30 +23,47 @@
  * 3. This notice may not be removed or altered from any
  *    source distribution.
  *
- *  Created on: 31 mars 2013
+ *  Created on: 1 avr. 2013
  */
 
-#ifndef MOVEFORCE_H_
-#define MOVEFORCE_H_
+#ifndef PLATFORMPHYSIC_H_
+#define PLATFORMPHYSIC_H_
 
-#include <Engine/Force.h>
+#include <Engine/Physics.h>
 
-class MoveForce :public Force
+class PlatformPhysic : public Physics
 {
 public:
-	MoveForce();
-	virtual ~MoveForce();
-	virtual void affectEntity(Entity* entity) ;
+	enum Direction{
+		UP = -90,
+		DOWN = 90,
+		LEFT = 180,
+		RIGHT = 0
+	};
+	enum StateFlag{
+		MOVING  =0,
+		RUNNING ,
+		JUMPING ,
+		FALLING
+	};
+
+	PlatformPhysic(Entity* entity);
+	virtual ~PlatformPhysic();
+
+	void move(PlatformPhysic::Direction dir);
+	void running(bool enable);
+	void jump();
+	void stop();
 
 
-	bool moveLeft;
-	bool moveRight;
-	bool jump;
+protected:
+	virtual void updatedSpeed();
+	sf::Vector2f         m_max_speed;
+	sf::Vector2f         m_acceleration;
+	PlatformPhysic::Direction    m_direction;
+	bool                  m_state[4];
 
-private:
-	float m_jump_force;
-	float m_move_force;
 
 };
 
-#endif /* MOVEFORCE_H_ */
+#endif /* PLATFORMPHYSIC_H_ */

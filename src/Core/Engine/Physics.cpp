@@ -32,25 +32,11 @@
 #include <Engine/Body.h>
 #include <cmath>
 #include <Engine/World.h>
-#include <Engine/Force.h>
-
-typedef  std::list<Force*>::iterator Force_it;
-
-
 
 Physics::Physics(Entity* entity)
-:drag     (0.0)
-,velocityX(0.0)
-,velocityY(0.0)
-,contact()
-,m_entity (entity)
-,m_friction(new Friction)
+: m_entity (entity)
+, m_speed (0.0,0.0)
 {
-	forces.push_back(m_friction);
-	for(int i =0;i<Physics::Count;i++)
-	{
-		contact[i] = false;
-	}
 }
 
 Physics::~Physics()
@@ -59,55 +45,22 @@ Physics::~Physics()
 
 void  Physics::update(World& world)
 {
-	// apply forces
 
-	const float max_speed = 16.0f; // pixel per cycle (16ms)
-	//const float max_force = 10000.0f; // pixel per cycle per cycle (16ms)
-
-	forceX = 0;
-	forceY = 0;
-
-	//	printf("before - velocity %f,%f\n",velocityX,velocityY);
-	//	int i=0;
-	for(Force_it it = forces.begin(); it != forces.end();it++)
-	{
-		(*it)->affectEntity(m_entity);
-		//		printf("after %d- velocity %f,%f\n",i++,velocityX,velocityY);
-	}
-
-//	double norme  = sqrt(forceX*forceX + forceY*forceY);
-//	if(norme > max_force)
-//	{
-//		forceX    *= max_force / norme;
-//		forceY    *= max_force / norme;
-//	}
-
-
-	velocityX += forceX;
-	velocityY += forceY;
-
-	double norme  = sqrt(velocityX*velocityX + velocityY*velocityY);
-	if(norme > max_speed)
-	{
-		velocityX *= max_speed / norme;
-		velocityY *= max_speed / norme;
-	}
-
+	updatedSpeed();
+//	printf("new speed %f,%f\n",m_speed.x,m_speed.y);
 
 	//moving body if it's possible
 	sf::Vector2f old_pos = m_entity->body()->position();
-	sf::Vector2f delta   = sf::Vector2f(velocityX  ,velocityY);
-	sf::Vector2f delta2  = sf::Vector2f(velocityX/2,velocityY/2);
-	sf::Vector2f delta4  = sf::Vector2f(velocityX/4,velocityY/4);
-	sf::Vector2f delta8  = sf::Vector2f(velocityX/8,velocityY/8);
-	sf::Vector2f deltaX  = sf::Vector2f(velocityX  ,0);
-	sf::Vector2f deltaY  = sf::Vector2f(0          ,velocityY);
-	sf::Vector2f deltaX2 = sf::Vector2f(velocityX/2  ,0);
-	sf::Vector2f deltaY2 = sf::Vector2f(0          ,velocityY/2);
-	sf::Vector2f deltaX4 = sf::Vector2f(velocityX/4  ,0);
-	sf::Vector2f deltaY4 = sf::Vector2f(0          ,velocityY/4);
-	sf::Vector2f deltaX8 = sf::Vector2f(velocityX/8  ,0);
-	sf::Vector2f deltaY8 = sf::Vector2f(0          ,velocityY/8);
+	sf::Vector2f delta   = m_speed;//sf::Vector2f(velocityX  ,velocityY);
+
+	sf::Vector2f deltaX  = sf::Vector2f(m_speed.x  ,0);
+	sf::Vector2f deltaY  = sf::Vector2f(0          ,m_speed.y);
+	sf::Vector2f deltaX2 = sf::Vector2f(m_speed.x/2  ,0);
+	sf::Vector2f deltaY2 = sf::Vector2f(0          ,m_speed.y/2);
+	sf::Vector2f deltaX4 = sf::Vector2f(m_speed.x/4  ,0);
+	sf::Vector2f deltaY4 = sf::Vector2f(0          ,m_speed.y/4);
+	sf::Vector2f deltaX8 = sf::Vector2f(m_speed.x/8  ,0);
+	sf::Vector2f deltaY8 = sf::Vector2f(0          ,m_speed.y/8);
 
 	sf::Vector2f finalDelta = sf::Vector2f(0,0);
 
@@ -137,7 +90,7 @@ void  Physics::update(World& world)
 						m_entity->body()->setPosition(old_pos);
 					}				}
 			}
-			velocityX *= 0;
+			m_speed.x = 0;
 		}
 
 		m_entity->body()->setPosition(old_pos+deltaY);
@@ -162,17 +115,9 @@ void  Physics::update(World& world)
 						m_entity->body()->setPosition(old_pos);
 					}				}
 			}
-			velocityY *= 0;
+			m_speed.y = 0;
 		}
 		m_entity->body()->setPosition(old_pos+finalDelta);
 
 	}
-
 }
-
-void  Physics::thrust(float power)
-{
-	//	velocityX += sin(-m_entity->body()->angle) * power;
-	//	velocityY += cos(-m_entity->body()->angle) * power;
-}
-
