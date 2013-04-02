@@ -30,49 +30,13 @@
 #include <cmath>
 #include <cstdio>
 
-const float   tile_size = 16.0;
-const float max_height_jump = tile_size*6.5;
-float elapsedTimeMS = 16; //ms
-
-// spe
-
-
-
-struct EntityBehavior{
-//	EntityBehavior();
-	EntityBehavior( float   p_gravity           = 0.1 *tile_size/elapsedTimeMS/elapsedTimeMS    ,  //force
-					float   p_max_falling_speed = 10.0*tile_size/elapsedTimeMS    ,                //vitesse
-					float   p_mvt_speed         = 3.0 *tile_size/elapsedTimeMS    ,                //vitesse
-					float   p_running_speed     = 7.0 *tile_size/elapsedTimeMS    ,                //vitesse
-					float   p_mvt_acc           = 9.0 *tile_size/elapsedTimeMS/elapsedTimeMS    ,                //force
-					float   p_size              = 0.6                       )                       //useless
-	:gravity          (p_gravity          )
-	,max_falling_speed(p_max_falling_speed)
-	,mvt_speed        (p_mvt_speed        )
-	,running_speed    (p_running_speed    )
-	,mvt_acc          (p_mvt_acc          )
-	,size             (p_size             )
-	,jump_impulse     (sqrt(2*p_gravity*max_height_jump)) //20.0*32.0 / 1000.0  )  //hauteur max = 0.5*jump_impulse^2/gravity en pix
-	{}
-
-	const float   gravity          ;
-	const float   max_falling_speed;
-	const float   mvt_speed        ;
-	const float   running_speed    ;
-	const float   mvt_acc          ;
-	const float   size             ;
-	const float   jump_impulse     ;
-
-//	static const EntityBehavior PLAYER;
-//	static const EntityBehavior MOB;
-};
-
-EntityBehavior m_behavior;
+// unit : pixel and frame
 
 PlatformPhysic::PlatformPhysic(Entity* entity)
 : Physics(entity)
-, m_max_speed(m_behavior.running_speed,m_behavior.max_falling_speed)
-, m_acceleration(m_behavior.mvt_acc,m_behavior.gravity)
+, m_max_speed(4,10)
+, m_acceleration(0.6,0.6)
+, m_jump_power(120)
 , m_direction(PlatformPhysic::DOWN)
 {
 	m_state[PlatformPhysic::MOVING]  = false;
@@ -105,7 +69,7 @@ void PlatformPhysic::stop()
 void PlatformPhysic::running(bool enable)
 {
 	m_state[PlatformPhysic::RUNNING] = enable;
-	m_max_speed.x = enable ? m_behavior.running_speed : m_behavior.mvt_speed;
+	//m_max_speed.x = enable ? m_behavior.running_speed : m_behavior.mvt_speed;
 }
 
 void PlatformPhysic::jump()
@@ -116,7 +80,7 @@ void PlatformPhysic::jump()
 		if(m_speed.y < 1.0)
 		{
 			m_state[PlatformPhysic::JUMPING] = true;
-			m_speed.y = -m_behavior.jump_impulse;
+			m_speed.y = -m_jump_power;
 
 		}
 	}
@@ -137,8 +101,8 @@ void PlatformPhysic::updatedSpeed()
 		{
 			case PlatformPhysic::UP    : break;
 			case PlatformPhysic::DOWN  : break;
-			case PlatformPhysic::LEFT  : m_speed.x -= m_acceleration.x*elapsedTimeMS; break;
-			case PlatformPhysic::RIGHT : m_speed.x += m_acceleration.x*elapsedTimeMS; break;
+			case PlatformPhysic::LEFT  : m_speed.x -= m_acceleration.x; break;
+			case PlatformPhysic::RIGHT : m_speed.x += m_acceleration.x; break;
 		}
 
 		if(fabs(m_speed.x) > fabs(m_max_speed.x) )
@@ -153,7 +117,7 @@ void PlatformPhysic::updatedSpeed()
 
 
 	//y speed
-	m_speed.y += m_behavior.gravity*elapsedTimeMS;
+	m_speed.y += m_acceleration.y;
 	if(fabs(m_speed.y) > fabs(m_max_speed.y) )
 	{
 		m_speed.y = (m_speed.y > 0)? m_max_speed.y:-m_max_speed.y;

@@ -60,6 +60,7 @@ protected:
 	virtual void updatedSpeed();
 	sf::Vector2f         m_max_speed;
 	sf::Vector2f         m_acceleration;
+	float                m_jump_power;
 	PlatformPhysic::Direction    m_direction;
 	bool                  m_state[4];
 
