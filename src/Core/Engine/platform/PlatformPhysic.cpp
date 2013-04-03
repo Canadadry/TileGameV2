@@ -34,7 +34,7 @@
 
 PlatformPhysic::PlatformPhysic(Entity* entity)
 : Physics(entity)
-, m_max_speed(4,10)
+, m_max_speed(2,10)
 , m_acceleration(0.6,0.6)
 , m_jump_power(120)
 , m_direction(PlatformPhysic::DOWN)
@@ -52,15 +52,12 @@ PlatformPhysic::~PlatformPhysic()
 
 void PlatformPhysic::move(Direction dir)
 {
-	printf("MOVING\n");
-
 	m_state[PlatformPhysic::MOVING] = true;
 	m_direction = dir;
 }
 
 void PlatformPhysic::stop()
 {
-	printf("STOP\n");
 	m_state[PlatformPhysic::MOVING] = false;
 	m_state[PlatformPhysic::RUNNING] = false;
 }
@@ -69,12 +66,10 @@ void PlatformPhysic::stop()
 void PlatformPhysic::running(bool enable)
 {
 	m_state[PlatformPhysic::RUNNING] = enable;
-	//m_max_speed.x = enable ? m_behavior.running_speed : m_behavior.mvt_speed;
 }
 
 void PlatformPhysic::jump()
 {
-	printf("JUMP\n");
 	if(m_state[PlatformPhysic::JUMPING] == false)
 	{
 		if(m_speed.y < 1.0)
@@ -96,13 +91,18 @@ void PlatformPhysic::updatedSpeed()
 	// x speed
 	if(m_state[PlatformPhysic::MOVING])
 	{
-		printf("isMoving\n");
+		float jump_factor = 1.0;
+		if(m_state[PlatformPhysic::JUMPING] == true)
+		{
+			jump_factor = 0.5;
+		}
+
 		switch(m_direction)
 		{
 			case PlatformPhysic::UP    : break;
 			case PlatformPhysic::DOWN  : break;
-			case PlatformPhysic::LEFT  : m_speed.x -= m_acceleration.x; break;
-			case PlatformPhysic::RIGHT : m_speed.x += m_acceleration.x; break;
+			case PlatformPhysic::LEFT  : m_speed.x -= m_acceleration.x*jump_factor; break;
+			case PlatformPhysic::RIGHT : m_speed.x += m_acceleration.x*jump_factor; break;
 		}
 
 		if(fabs(m_speed.x) > fabs(m_max_speed.x) )
@@ -112,9 +112,8 @@ void PlatformPhysic::updatedSpeed()
 	}
 	else
 	{
-		m_speed.x*=0.5;
+		m_speed.x*=0.3;
 	}
-
 
 	//y speed
 	m_speed.y += m_acceleration.y;
