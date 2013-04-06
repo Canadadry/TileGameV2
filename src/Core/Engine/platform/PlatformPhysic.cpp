@@ -29,15 +29,18 @@
 #include "PlatformPhysic.h"
 #include <cmath>
 #include <cstdio>
+#include <Engine/Entity.h>
+#include <Engine/Body.h>
 
 // unit : pixel and frame
 
 PlatformPhysic::PlatformPhysic(Entity* entity)
 : Physics(entity)
-, m_max_speed(2,10)
-, m_acceleration(0.6,0.6)
-, m_jump_power(120)
+, m_max_speed(2,8)
+, m_acceleration(0.6,0.4)
+, m_jump_power(140)
 , m_direction(PlatformPhysic::DOWN)
+, m_frameOnWall(0)
 {
 	m_state[PlatformPhysic::MOVING]  = false;
 	m_state[PlatformPhysic::RUNNING] = false;
@@ -70,13 +73,27 @@ void PlatformPhysic::running(bool enable)
 
 void PlatformPhysic::jump()
 {
-	if(m_state[PlatformPhysic::JUMPING] == false)
+	if(m_state[PlatformPhysic::JUMPING] == false &&  m_state[PlatformPhysic::FALLING] == false)
 	{
-		if(m_speed.y < 1.0)
+//		if(m_speed.y < 1.0)
 		{
 			m_state[PlatformPhysic::JUMPING] = true;
 			m_speed.y = -m_jump_power;
 
+		}
+	}
+	else //if(m_state[PlatformPhysic::JUMPING] == true || m_state[PlatformPhysic::FALLING] == true)
+	{
+		if(m_frameOnWall>0)
+		{
+			m_speed.y = -m_jump_power;
+			switch(m_direction)
+			{
+				case PlatformPhysic::UP    : break;
+				case PlatformPhysic::DOWN  : break;
+				case PlatformPhysic::LEFT  : m_speed.x =  m_acceleration.x*30; break;
+				case PlatformPhysic::RIGHT : m_speed.x = -m_acceleration.x*30; break;
+			}
 		}
 	}
 }
@@ -84,15 +101,20 @@ void PlatformPhysic::jump()
 void PlatformPhysic::updatedSpeed()
 {
 
-	if(fabs(m_speed.y) < 0.1)
+	if(m_entity->body()->isAABBCornerFree[Body::BottomLeft] || m_entity->body()->isAABBCornerFree[Body::BottomRight])
 	{
-		m_state[PlatformPhysic::JUMPING] = false;
+		m_frameOnWall++;
 	}
+	else
+	{
+		m_frameOnWall = 0;
+	}
+
 	// x speed
 	if(m_state[PlatformPhysic::MOVING])
 	{
 		float jump_factor = 1.0;
-		if(m_state[PlatformPhysic::JUMPING] == true)
+		if(m_state[PlatformPhysic::JUMPING] == true || m_state[PlatformPhysic::FALLING] == true )
 		{
 			jump_factor = 0.5;
 		}
@@ -116,11 +138,22 @@ void PlatformPhysic::updatedSpeed()
 	}
 
 	//y speed
+	if(fabs(m_speed.y) < 0.001)
+	{
+		m_state[PlatformPhysic::JUMPING] = false;
+		m_state[PlatformPhysic::FALLING] = false;
+	}
+	else if(m_speed.y > 0)
+	{
+		 m_state[PlatformPhysic::FALLING] = true;
+	}
+
 	m_speed.y += m_acceleration.y;
 	if(fabs(m_speed.y) > fabs(m_max_speed.y) )
 	{
 		m_speed.y = (m_speed.y > 0)? m_max_speed.y:-m_max_speed.y;
 	}
+
 }
 
 

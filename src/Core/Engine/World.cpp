@@ -66,12 +66,12 @@ bool World::checkBodyCollision(Body* body)
 
 }
 
-bool World::isCollidingTerrain(Body* body)
+bool World::isCollidingTerrain(Body* body, bool accumulateCollision)
 {
 	bool ret = false;
 	if(m_terrain)
 	{
-		ret = m_terrain->isColliding(body);
+		ret = m_terrain->isColliding(body,accumulateCollision);
 	}
 	return ret;
 }

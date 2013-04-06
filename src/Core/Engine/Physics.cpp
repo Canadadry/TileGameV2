@@ -70,21 +70,21 @@ void  Physics::update(World& world)
 	{
 		m_entity->body()->setPosition(old_pos+deltaX);
 		finalDelta.x = deltaX.x;
-		if(world.isCollidingTerrain(m_entity->body()))
+		if(world.isCollidingTerrain(m_entity->body(),true))
 		{
 
 			finalDelta.x = deltaX2.x;
 			m_entity->body()->setPosition(old_pos+deltaX2);
-			if(world.isCollidingTerrain(m_entity->body()))
+			if(world.isCollidingTerrain(m_entity->body(),true))
 			{
 
 				finalDelta.x = deltaX4.x;
 				m_entity->body()->setPosition(old_pos+deltaX4);
-				if(world.isCollidingTerrain(m_entity->body()))
+				if(world.isCollidingTerrain(m_entity->body(),true))
 				{
 					finalDelta.x = deltaX8.x;
 					m_entity->body()->setPosition(old_pos+deltaX8);
-					if(world.isCollidingTerrain(m_entity->body()))
+					if(world.isCollidingTerrain(m_entity->body(),true))
 					{
 						finalDelta.x = 0;
 						m_entity->body()->setPosition(old_pos);
@@ -95,21 +95,21 @@ void  Physics::update(World& world)
 
 		m_entity->body()->setPosition(old_pos+deltaY);
 		finalDelta.y = deltaY.y;
-		if(world.isCollidingTerrain(m_entity->body()))
+		if(world.isCollidingTerrain(m_entity->body(),true))
 		{
 
 			finalDelta.y = deltaY2.y;
 			m_entity->body()->setPosition(old_pos+deltaY2);
-			if(world.isCollidingTerrain(m_entity->body()))
+			if(world.isCollidingTerrain(m_entity->body(),true))
 			{
 
 				finalDelta.y = deltaY4.y;
 				m_entity->body()->setPosition(old_pos+deltaY4);
-				if(world.isCollidingTerrain(m_entity->body()))
+				if(world.isCollidingTerrain(m_entity->body(),true))
 				{
 					finalDelta.y = deltaY8.y;
 					m_entity->body()->setPosition(old_pos+deltaY8);
-					if(world.isCollidingTerrain(m_entity->body()))
+					if(world.isCollidingTerrain(m_entity->body(),true))
 					{
 						finalDelta.y = 0;
 						m_entity->body()->setPosition(old_pos);

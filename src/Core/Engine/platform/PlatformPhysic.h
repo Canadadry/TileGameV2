@@ -64,6 +64,8 @@ protected:
 	PlatformPhysic::Direction    m_direction;
 	bool                  m_state[4];
 
+	int m_frameOnWall;
+
 
 };
 

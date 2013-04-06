@@ -44,6 +44,19 @@ public:
 class Body
 {
 public:
+	enum AABBCorner{
+		TopLeft = 0,
+		Top,
+		TopRight,
+		Left,
+		Middle,
+		Right,
+		BottomLeft,
+		Bottom,
+		BottomRight,
+		AABBCornerCount
+	};
+
 	Body(Entity* entity);
 	virtual ~Body();
 
@@ -55,18 +68,18 @@ public:
 
 	bool intersects(const Body& body) const;
 	bool handleCollision(Body* body);
+	Entity* entity();
 
 	int    type;
-
 	CollisionHandler* collisionHandler;
-
-	Entity* entity();
+	bool isAABBCornerFree[Body::AABBCornerCount];
 
 private:
 	Entity* m_entity;
 	sf::FloatRect m_aabb;
 	sf::Vector2f m_origin;
 	sf::Vector2f m_computedPosition;
+
 
 
 

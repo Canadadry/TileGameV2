@@ -36,7 +36,7 @@ class Body;
 class Terrain{
 public :
 	virtual ~Terrain(){}
-	virtual bool isColliding(Body* body){return false;}
+	virtual bool isColliding(Body* body, bool accumulateCollision){return false;}
 
 };
 
@@ -49,7 +49,7 @@ public:
 	void addBody(Body* body);
 	void removeBody(Body* body);
 	bool checkBodyCollision(Body* body);
-	bool isCollidingTerrain(Body* body);
+	bool isCollidingTerrain(Body* body, bool accumulateCollision = false);
 	void setTerrain(Terrain* terrain);
 
 protected:

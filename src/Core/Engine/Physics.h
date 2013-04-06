@@ -39,13 +39,7 @@ class Body;
 class Physics
 {
 public:
-	enum AABBCorner{
-		TopLeft = 0,
-		TopRight,
-		BottomLeft,
-		BottomRight,
-		Count
-	};
+
 
 	Physics(Entity* entity);
 	virtual ~Physics();

@@ -36,7 +36,7 @@ class TileMapTerrain : public Terrain
 public:
 	TileMapTerrain();
 	virtual ~TileMapTerrain();
-	bool isColliding(Body* body);
+	bool isColliding(Body* body, bool AccumulateCollision);
 
 	int* data;
 	int width_in_tile;

@@ -61,18 +61,6 @@ void TileGame::render(sf::RenderTarget* screen_surface)
 
 void TileGame::update(int elapsedTimeMS)
 {
-//	sf::Vector2i pos = sf::Mouse::getPosition(*Screen::window());
-//	attarction->origin.x = pos.x;
-//	attarction->origin.y = pos.y;
-//
-//	bool isPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-//	attarction->power = isPressed ? 15.0 : 0.0;
-
-
-//	move->moveLeft  =sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-//	move->moveRight =sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
-//	move->jump      =sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-
 	Game::update(elapsedTimeMS);
 }
 
@@ -181,18 +169,6 @@ void TileGame::entering()
 	player->setPhysics(physics);
 
 	addEntity(player);
-
-//	attarction = new AttractionPoint;
-//	attarction->power = 15.0;
-//	player->physics()->forces.push_back(attarction);
-
-//	move = new MoveForce;
-//	player->physics()->forces.push_back(move);
-//
-//	AttractionDirection* gravity = new AttractionDirection;
-//	gravity->power = 10.0;
-//	gravity->angleDirection = 90.0;
-//	player->physics()->forces.push_back(gravity);
 
 }
 

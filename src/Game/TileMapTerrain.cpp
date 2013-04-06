@@ -41,26 +41,58 @@ TileMapTerrain::TileMapTerrain()
 TileMapTerrain::~TileMapTerrain()
 {}
 
-bool TileMapTerrain::isColliding(Body* body)
+bool TileMapTerrain::isColliding(Body* body, bool accumulateCollision)
 {
 	bool ret = false;
 
 	sf::Vector2f position = body->position();
 	sf::Vector2f size     = body->size();
+	sf::Vector2f size2    = sf::Vector2f(size.x/2.0,size.y/2.0);
 
-	//bool* corners = body->entity()->physics()->contact;
+	bool* corners = body->isAABBCornerFree;
 
-//	ret |= corners[Physics::TopLeft    ] = isSolide(position.x       ,position.y       );
-//	ret |= corners[Physics::TopRight   ] = isSolide(position.x+size.x,position.y       );
-//	ret |= corners[Physics::BottomLeft ] = isSolide(position.x+size.x,position.y+size.y);
-//	ret |= corners[Physics::BottomRight] = isSolide(position.x       ,position.y+size.y);
+	if(accumulateCollision)
+	{
 
+		corners[Body::TopLeft    ] |= isSolide(position.x           , position.y           );
+		corners[Body::Top        ] |= isSolide(position.x + size2.x , position.y           );
+		corners[Body::TopRight   ] |= isSolide(position.x + size.x  , position.y           );
 
-	ret |= isSolide(position.x       ,position.y       );
-	ret |= isSolide(position.x+size.x,position.y       );
-	ret |= isSolide(position.x+size.x,position.y+size.y);
-	ret |= isSolide(position.x       ,position.y+size.y);
+		corners[Body::Left       ] |= isSolide(position.x           , position.y + size2.y );
+		corners[Body::Middle     ] |= isSolide(position.x + size2.x , position.y + size2.y );
+		corners[Body::Right      ] |= isSolide(position.x + size.x  , position.y + size2.y );
 
+		corners[Body::BottomLeft ] |= isSolide(position.x           , position.y + size.y  );
+		corners[Body::BottomLeft ] |= isSolide(position.x + size2.x , position.y + size.y  );
+		corners[Body::BottomRight] |= isSolide(position.x + size.x  , position.y + size.y  );
+
+	}
+	else
+	{
+		corners[Body::TopLeft    ] = isSolide(position.x           , position.y           );
+		corners[Body::Top        ] = isSolide(position.x + size2.x , position.y           );
+		corners[Body::TopRight   ] = isSolide(position.x + size.x  , position.y           );
+
+		corners[Body::Left       ] = isSolide(position.x           , position.y + size2.y );
+		corners[Body::Middle     ] = isSolide(position.x + size2.x , position.y + size2.y );
+		corners[Body::Right      ] = isSolide(position.x + size.x  , position.y + size2.y );
+
+		corners[Body::BottomLeft ] = isSolide(position.x           , position.y + size.y  );
+		corners[Body::BottomLeft ] = isSolide(position.x + size2.x , position.y + size.y  );
+		corners[Body::BottomRight] = isSolide(position.x + size.x  , position.y + size.y  );
+
+	}
+	ret |= isSolide(position.x           , position.y           );
+	ret |= isSolide(position.x + size2.x , position.y           );
+	ret |= isSolide(position.x + size.x  , position.y           );
+
+	ret |= isSolide(position.x           , position.y + size2.y );
+	ret |= isSolide(position.x + size2.x , position.y + size2.y );
+	ret |= isSolide(position.x + size.x  , position.y + size2.y );
+
+	ret |= isSolide(position.x           , position.y + size.y  );
+	ret |= isSolide(position.x + size2.x , position.y + size.y  );
+	ret |= isSolide(position.x + size.x  , position.y + size.y  );
 
 	return ret;
 }

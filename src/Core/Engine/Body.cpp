@@ -32,6 +32,7 @@
 Body::Body(Entity* entity)
 : type    (0)
 , collisionHandler(0)
+, isAABBCornerFree()
 , m_entity(entity)
 , m_aabb(0.0,0.0,0.0,0.0)
 , m_origin(0.0,0.0)
