@@ -47,7 +47,7 @@ void  Physics::update(World& world)
 {
 
 	updatedSpeed();
-//	printf("new speed %f,%f\n",m_speed.x,m_speed.y);
+	//	printf("new speed %f,%f\n",m_speed.x,m_speed.y);
 
 	//moving body if it's possible
 	sf::Vector2f old_pos = m_entity->body()->position();
@@ -64,60 +64,69 @@ void  Physics::update(World& world)
 
 	sf::Vector2f finalDelta = sf::Vector2f(0,0);
 
-	m_entity->body()->setPosition(old_pos + delta);
-
 	if(world.isCollidingTerrain(m_entity->body()))
 	{
-		m_entity->body()->setPosition(old_pos+deltaX);
-		finalDelta.x = deltaX.x;
-		if(world.isCollidingTerrain(m_entity->body(),true))
-		{
-
-			finalDelta.x = deltaX2.x;
-			m_entity->body()->setPosition(old_pos+deltaX2);
-			if(world.isCollidingTerrain(m_entity->body(),true))
-			{
-
-				finalDelta.x = deltaX4.x;
-				m_entity->body()->setPosition(old_pos+deltaX4);
-				if(world.isCollidingTerrain(m_entity->body(),true))
-				{
-					finalDelta.x = deltaX8.x;
-					m_entity->body()->setPosition(old_pos+deltaX8);
-					if(world.isCollidingTerrain(m_entity->body(),true))
-					{
-						finalDelta.x = 0;
-						m_entity->body()->setPosition(old_pos);
-					}				}
-			}
-			m_speed.x = 0;
-		}
-
-		m_entity->body()->setPosition(old_pos+deltaY);
-		finalDelta.y = deltaY.y;
-		if(world.isCollidingTerrain(m_entity->body(),true))
-		{
-
-			finalDelta.y = deltaY2.y;
-			m_entity->body()->setPosition(old_pos+deltaY2);
-			if(world.isCollidingTerrain(m_entity->body(),true))
-			{
-
-				finalDelta.y = deltaY4.y;
-				m_entity->body()->setPosition(old_pos+deltaY4);
-				if(world.isCollidingTerrain(m_entity->body(),true))
-				{
-					finalDelta.y = deltaY8.y;
-					m_entity->body()->setPosition(old_pos+deltaY8);
-					if(world.isCollidingTerrain(m_entity->body(),true))
-					{
-						finalDelta.y = 0;
-						m_entity->body()->setPosition(old_pos);
-					}				}
-			}
-			m_speed.y = 0;
-		}
-		m_entity->body()->setPosition(old_pos+finalDelta);
-
+		m_entity->body()->setPosition(old_pos + delta);
 	}
+	else
+	{
+		m_entity->body()->setPosition(old_pos + delta);
+
+		if(world.isCollidingTerrain(m_entity->body()))
+		{
+			m_entity->body()->setPosition(old_pos+deltaX);
+			finalDelta.x = deltaX.x;
+			if(world.isCollidingTerrain(m_entity->body(),true))
+			{
+
+				finalDelta.x = deltaX2.x;
+				m_entity->body()->setPosition(old_pos+deltaX2);
+				if(world.isCollidingTerrain(m_entity->body(),true))
+				{
+
+					finalDelta.x = deltaX4.x;
+					m_entity->body()->setPosition(old_pos+deltaX4);
+					if(world.isCollidingTerrain(m_entity->body(),true))
+					{
+						finalDelta.x = deltaX8.x;
+						m_entity->body()->setPosition(old_pos+deltaX8);
+						if(world.isCollidingTerrain(m_entity->body(),true))
+						{
+							finalDelta.x = 0;
+							m_entity->body()->setPosition(old_pos);
+						}				}
+				}
+				m_speed.x = 0;
+			}
+
+			m_entity->body()->setPosition(old_pos+deltaY);
+			finalDelta.y = deltaY.y;
+			if(world.isCollidingTerrain(m_entity->body(),true))
+			{
+
+				finalDelta.y = deltaY2.y;
+				m_entity->body()->setPosition(old_pos+deltaY2);
+				if(world.isCollidingTerrain(m_entity->body(),true))
+				{
+
+					finalDelta.y = deltaY4.y;
+					m_entity->body()->setPosition(old_pos+deltaY4);
+					if(world.isCollidingTerrain(m_entity->body(),true))
+					{
+						finalDelta.y = deltaY8.y;
+						m_entity->body()->setPosition(old_pos+deltaY8);
+						if(world.isCollidingTerrain(m_entity->body(),true))
+						{
+							finalDelta.y = 0;
+							m_entity->body()->setPosition(old_pos);
+						}				}
+				}
+				m_speed.y = 0;
+			}
+
+			m_entity->body()->setPosition(old_pos+finalDelta);
+
+		}
+	}
+
 }
