@@ -65,6 +65,8 @@ protected:
 	bool                  m_state[4];
 
 	int m_frameOnWall;
+	int m_wallJumpCount;
+	int m_jumpFrame;
 
 
 };

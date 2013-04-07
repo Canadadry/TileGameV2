@@ -41,6 +41,8 @@ PlatformPhysic::PlatformPhysic(Entity* entity)
 , m_jump_power(140)
 , m_direction(PlatformPhysic::DOWN)
 , m_frameOnWall(0)
+, m_wallJumpCount(0)
+, m_jumpFrame(0)
 {
 	m_state[PlatformPhysic::MOVING]  = false;
 	m_state[PlatformPhysic::RUNNING] = false;
@@ -73,26 +75,28 @@ void PlatformPhysic::running(bool enable)
 
 void PlatformPhysic::jump()
 {
-	if(m_state[PlatformPhysic::JUMPING] == false &&  m_state[PlatformPhysic::FALLING] == false)
+	if( m_entity->body()->isOnFloor())
 	{
-//		if(m_speed.y < 1.0)
 		{
 			m_state[PlatformPhysic::JUMPING] = true;
 			m_speed.y = -m_jump_power;
-
 		}
 	}
-	else //if(m_state[PlatformPhysic::JUMPING] == true || m_state[PlatformPhysic::FALLING] == true)
+	else
 	{
-		if(m_frameOnWall>0)
+		if(m_frameOnWall>0 && m_frameOnWall < 10)
 		{
-			m_speed.y = -m_jump_power;
-			switch(m_direction)
+			if(m_wallJumpCount < 3)
 			{
-				case PlatformPhysic::UP    : break;
-				case PlatformPhysic::DOWN  : break;
-				case PlatformPhysic::LEFT  : m_speed.x =  m_acceleration.x*30; break;
-				case PlatformPhysic::RIGHT : m_speed.x = -m_acceleration.x*30; break;
+				m_wallJumpCount++;
+				m_speed.y = -m_jump_power;
+				switch(m_direction)
+				{
+					case PlatformPhysic::UP    : break;
+					case PlatformPhysic::DOWN  : break;
+					case PlatformPhysic::LEFT  : m_speed.x =  m_max_speed.x; break;
+					case PlatformPhysic::RIGHT : m_speed.x = -m_max_speed.x; break;
+				}
 			}
 		}
 	}
@@ -101,7 +105,7 @@ void PlatformPhysic::jump()
 void PlatformPhysic::updatedSpeed()
 {
 
-	if(m_entity->body()->isAABBCornerFree[Body::BottomLeft] || m_entity->body()->isAABBCornerFree[Body::BottomRight])
+	if(m_entity->body()->touchingWall() && ! m_entity->body()->isOnFloor())
 	{
 		m_frameOnWall++;
 	}
@@ -114,11 +118,10 @@ void PlatformPhysic::updatedSpeed()
 	if(m_state[PlatformPhysic::MOVING])
 	{
 		float jump_factor = 1.0;
-		if(m_state[PlatformPhysic::JUMPING] == true || m_state[PlatformPhysic::FALLING] == true )
+		if(! m_entity->body()->isOnFloor())
 		{
 			jump_factor = 0.5;
 		}
-
 		switch(m_direction)
 		{
 			case PlatformPhysic::UP    : break;
@@ -138,14 +141,15 @@ void PlatformPhysic::updatedSpeed()
 	}
 
 	//y speed
-	if(fabs(m_speed.y) < 0.001)
+	if(m_entity->body()->isAABBCornerFree[Body::Bottom] )
 	{
 		m_state[PlatformPhysic::JUMPING] = false;
 		m_state[PlatformPhysic::FALLING] = false;
+		m_wallJumpCount = 0;
 	}
 	else if(m_speed.y > 0)
 	{
-		 m_state[PlatformPhysic::FALLING] = true;
+		m_state[PlatformPhysic::FALLING] = true;
 	}
 
 	m_speed.y += m_acceleration.y;

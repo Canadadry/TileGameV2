@@ -63,7 +63,7 @@ bool TileMapTerrain::isColliding(Body* body, bool accumulateCollision)
 		corners[Body::Right      ] |= isSolide(position.x + size.x  , position.y + size2.y );
 
 		corners[Body::BottomLeft ] |= isSolide(position.x           , position.y + size.y  );
-		corners[Body::BottomLeft ] |= isSolide(position.x + size2.x , position.y + size.y  );
+		corners[Body::Bottom     ] |= isSolide(position.x + size2.x , position.y + size.y  );
 		corners[Body::BottomRight] |= isSolide(position.x + size.x  , position.y + size.y  );
 
 	}
@@ -78,7 +78,7 @@ bool TileMapTerrain::isColliding(Body* body, bool accumulateCollision)
 		corners[Body::Right      ] = isSolide(position.x + size.x  , position.y + size2.y );
 
 		corners[Body::BottomLeft ] = isSolide(position.x           , position.y + size.y  );
-		corners[Body::BottomLeft ] = isSolide(position.x + size2.x , position.y + size.y  );
+		corners[Body::Bottom     ] = isSolide(position.x + size2.x , position.y + size.y  );
 		corners[Body::BottomRight] = isSolide(position.x + size.x  , position.y + size.y  );
 
 	}

@@ -74,6 +74,9 @@ public:
 	CollisionHandler* collisionHandler;
 	bool isAABBCornerFree[Body::AABBCornerCount];
 
+	bool touchingWall();
+	bool isOnFloor();
+
 private:
 	Entity* m_entity;
 	sf::FloatRect m_aabb;

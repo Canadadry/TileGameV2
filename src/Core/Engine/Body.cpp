@@ -99,4 +99,18 @@ bool Body::handleCollision(Body* body)
 	return ret;
 }
 
+bool Body::touchingWall()
+{
+	return  (  ( isAABBCornerFree[Body::BottomLeft ] && isAABBCornerFree[Body::TopLeft ])
+	        || ( isAABBCornerFree[Body::BottomRight] && isAABBCornerFree[Body::TopRight]));
+}
+
+bool Body::isOnFloor()
+{
+	return  (   isAABBCornerFree[Body::BottomLeft ]
+	        &&  isAABBCornerFree[Body::BottomRight]);
+}
+
+
+
 
