@@ -27,6 +27,10 @@
  */
 
 #include "KeyBoardGamePad.h"
+#include <Engine/Entity.h>
+#include <Engine/Physics.h>
+#include <Engine/platform/PlatformPhysic.h>
+#include <SFML/Window/Event.hpp>
 
 KeyBoardGamePad::KeyBoardGamePad(Entity* entity)
 : GamePad(entity)
@@ -37,33 +41,65 @@ KeyBoardGamePad::~KeyBoardGamePad()
 {
 }
 
-void KeyBoardGamePad::handleEvent(const sf::Event& Event)
+void KeyBoardGamePad::handleEvent(const sf::Event& event)
 {
+	PlatformPhysic& physic = *(PlatformPhysic*)m_entity->physics();
+	if(event.type == sf::Event::KeyPressed )
+	{
+		if(event.key.code == sf::Keyboard::Left)
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				physic.move(PlatformPhysic::LEFT);
+			}
+		}
+		else if(event.key.code == sf::Keyboard::C)
+		{
+			physic.running(true);
+		}
+		else if(event.key.code == sf::Keyboard::Right)
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				physic.move(PlatformPhysic::RIGHT);
+			}
+		}
+		else if(event.key.code == sf::Keyboard::Space)
+		{
+			physic.jump();
+		}
+	}
+	else if(event.type == sf::Event::KeyReleased)
+	{
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				physic.move(PlatformPhysic::LEFT);
+			}
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			{
+				physic.move(PlatformPhysic::RIGHT);
+			}
+		}
+		else if(event.key.code == sf::Keyboard::C)
+		{
+			physic.running(false);
+		}
+		else
+		{
+			physic.stop();
+		}
+	}
+
+
 }
 
 void KeyBoardGamePad::update()
 {
-//	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-//	{
-//		m_entity->body()->angle -= 0.04;
-//	}
-//	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-//	{
-//		m_entity->body()->angle += 0.04;
-//	}
-//	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-//	{
-//		m_entity->physics()->thrust(-0.4);
-//	}
-//	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-//	{
-//		m_entity->physics()->thrust(0.4);
-//	}
-//
-//	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-//	{
-//		m_entity->weapon()->fire();
-//	}
 
 }
 

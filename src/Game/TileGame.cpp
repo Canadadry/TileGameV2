@@ -66,58 +66,7 @@ void TileGame::update(int elapsedTimeMS)
 
 void TileGame::handleEvent(const sf::Event& event)
 {
-	PlatformPhysic& physic = *(PlatformPhysic*)player->physics();
-	if(event.type == sf::Event::KeyPressed )
-	{
-		if(event.key.code == sf::Keyboard::Left)
-		{
-			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			{
-				physic.move(PlatformPhysic::LEFT);
-			}
-		}
-		else if(event.key.code == sf::Keyboard::C)
-		{
-			physic.running(true);
-		}
-		else if(event.key.code == sf::Keyboard::Right)
-		{
-			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			{
-				physic.move(PlatformPhysic::RIGHT);
-			}
-		}
-		else if(event.key.code == sf::Keyboard::Space)
-		{
-			physic.jump();
-		}
-	}
-	else if(event.type == sf::Event::KeyReleased)
-	{
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			{
-				physic.move(PlatformPhysic::LEFT);
-			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			{
-				physic.move(PlatformPhysic::RIGHT);
-			}
-		}
-		else if(event.key.code == sf::Keyboard::C)
-		{
-			physic.running(false);
-		}
-		else
-		{
-			physic.stop();
-		}
-	}
-
+	Game::handleEvent(event);
 }
 
 void TileGame::entering()
@@ -165,9 +114,6 @@ void TileGame::entering()
 	m_terrain->tile_size = m_scene2D->tile_size;
 
 	player = new Player();
-	PlatformPhysic* physics = new PlatformPhysic(player);
-	player->setPhysics(physics);
-
 	addEntity(player);
 
 }

@@ -29,8 +29,11 @@
 #include "Player.h"
 #include <Engine/Body.h>
 #include <Engine/Physics.h>
+#include <Engine/platform/PlatformPhysic.h>
 #include <Engine/View.h>
 #include <Engine/RessourceManager.h>
+
+#include "KeyBoardGamePad.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -38,19 +41,17 @@
 
 Player::Player()
 : Entity()
-//, m_sprite(new sf::Sprite )
 {
 
 	setBody(new Body(this));
 	body()->setSize(sf::Vector2f(16,16));
-	//body()->setOrigin(sf::Vector2f(8,8));
 	body()->setPosition(sf::Vector2f(38,38));
 
-	//setPhysics(new Physics(this));
+	setPhysics(new PlatformPhysic(this));
+	setGamepad(new KeyBoardGamePad(this));
 
 	setView(new View(this));
 	sf::RectangleShape* shape  = new sf::RectangleShape(sf::Vector2f(16,16));
-	//shape->setOrigin(sf::Vector2f(8,8));
 	shape->setFillColor(sf::Color::Red);
 	view()->drawable = shape;
 
