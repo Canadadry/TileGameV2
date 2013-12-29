@@ -34,7 +34,7 @@
 
 class Scene2D;
 class TileMap;
-class TileMapTerrain;
+class TileMapLand;
 namespace sf{
 class Texture;
 class RenderTexture;
@@ -54,7 +54,7 @@ public:
     int m_width_in_tile;
     int m_height_in_tile;
 
-    TileMapTerrain* m_terrain;
+    TileMapLand* m_terrain;
     Scene2D* m_scene2D;
     sf::Shape* m_shape;
     Body* trackingPoint;
@@ -63,6 +63,7 @@ public:
 
     std::vector<sf::Texture*> m_tilesets;
     std::vector<TileMap*> m_tilemap;
+    TileMapLand* m_tilemap_land;
 protected:
     virtual void entering() ;
 

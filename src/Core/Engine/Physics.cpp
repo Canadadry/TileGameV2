@@ -1,8 +1,9 @@
 #include <Engine/Entity.h>
 #include <Engine/Physics.h>
 #include <Engine/Body.h>
-#include <Assert.h>
+#include <Debug/Assert.h>
 
+#include <cmath>
 
 Physics::Physics(Entity& entity)
 : Component (entity)
@@ -20,5 +21,10 @@ void  Physics::update()
     ASSERT(entity.body());
     lastPos = entity.body()->position();
     speed += gravity /* * dt*/;
-    entity.body()->setPosition(entity.body()->position()+speed/* *dt*/);
+    sf::Vector2f pos = entity.body()->position();
+    pos += speed /* *dt */;
+    pos.x = roundf(pos.x);
+    pos.y = roundf(pos.y);
+
+    entity.body()->setPosition(pos);
 }

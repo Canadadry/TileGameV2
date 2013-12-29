@@ -19,6 +19,8 @@ public:
 	sf::Vector2f origin() const;
 	sf::Vector2f size() const;
 
+	void move(float x, float y);
+
 	bool intersects(const Body& body) const;
 
 	Signal1< Body* >      collideWidth;

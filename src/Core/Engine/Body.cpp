@@ -13,6 +13,11 @@ Body::~Body()
 {
 }
 
+void Body::move(float x, float y)
+{
+    setPosition(position()+sf::Vector2f(x,y));
+}
+
 sf::Vector2f Body::size() const
 {
     return sf::Vector2f(m_aabb.width,m_aabb.height);

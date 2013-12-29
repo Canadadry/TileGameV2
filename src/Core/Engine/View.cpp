@@ -4,7 +4,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <Assert.h>
+#include <Debug/Assert.h>
 
 View::View(Entity& entity)
     : Component(entity)

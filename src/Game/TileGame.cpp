@@ -32,9 +32,8 @@
 #include <Graphics/DrawableGroupe.h>
 #include <Graphics/TileMap.h>
 #include <Graphics/RessourceManager.h>
-#include "TileMapTerrain.h"
+#include "TileMapLand.h"
 #include <Engine/Physics.h>
-//#include <Engine/platform/PlatformPhysic.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -44,7 +43,7 @@ TileGame::TileGame(int window_width ,int window_height )
 : Game(window_width ,window_height)
 , m_width_in_tile(0)
 , m_height_in_tile(0)
-, m_terrain(new TileMapTerrain)
+, m_terrain(new TileMapLand)
 , m_scene2D(0)
 {
 }
@@ -113,7 +112,7 @@ void TileGame::entering()
 	m_terrain->height_in_tile = m_scene2D->height_in_tile;
 	m_terrain->tile_size = m_scene2D->tile_size;
 
-	player = new Player();
+	player = new Player(m_terrain);
 	addEntity(player);
 
 }
