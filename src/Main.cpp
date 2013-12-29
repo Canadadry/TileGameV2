@@ -16,6 +16,7 @@ int main(int argc, char** argv)
 	std::string path = argv[0];
 	path = path.substr(0,path.rfind("/"));
 	path = path.substr(0,path.rfind("/"));
+	path = path.substr(0,path.rfind("/"));
 	path += "/Resources/";
 
 	RessourceManager::Init(path);

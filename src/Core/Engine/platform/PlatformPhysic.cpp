@@ -75,7 +75,7 @@ void PlatformPhysic::running(bool enable)
 
 void PlatformPhysic::jump()
 {
-	if( m_entity->body()->isOnFloor())
+	if(canJump())
 	{
 		{
 			m_state[PlatformPhysic::JUMPING] = true;
@@ -84,22 +84,29 @@ void PlatformPhysic::jump()
 	}
 	else
 	{
-		if(m_frameOnWall>0 && m_frameOnWall < 10)
+		if(canWallJump())
 		{
-			if(m_wallJumpCount < 3)
+			m_wallJumpCount++;
+			m_speed.y = -m_jump_power;
+			switch(m_direction)
 			{
-				m_wallJumpCount++;
-				m_speed.y = -m_jump_power;
-				switch(m_direction)
-				{
-					case PlatformPhysic::UP    : break;
-					case PlatformPhysic::DOWN  : break;
-					case PlatformPhysic::LEFT  : m_speed.x =  m_max_speed.x; break;
-					case PlatformPhysic::RIGHT : m_speed.x = -m_max_speed.x; break;
-				}
+				case PlatformPhysic::UP    : break;
+				case PlatformPhysic::DOWN  : break;
+				case PlatformPhysic::LEFT  : m_speed.x =  m_max_speed.x; break;
+				case PlatformPhysic::RIGHT : m_speed.x = -m_max_speed.x; break;
 			}
 		}
 	}
+}
+
+bool PlatformPhysic::canJump()
+{
+	return m_entity->body()->isOnFloor();
+}
+
+bool PlatformPhysic::canWallJump()
+{
+	return (m_frameOnWall>0 && m_frameOnWall < 10 &&m_wallJumpCount < 3);
 }
 
 void PlatformPhysic::updatedSpeed()

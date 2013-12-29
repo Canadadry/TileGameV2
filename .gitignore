@@ -4,6 +4,7 @@
 /img
 /TileGameV2.app
 /Delivery.command
+/build
 
 # OS generated files #
 ######################
@@ -15,3 +16,4 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+CMakeLists.txt.user

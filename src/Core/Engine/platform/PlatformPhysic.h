@@ -55,6 +55,8 @@ public:
 	void jump();
 	void stop();
 
+	bool canJump();
+	bool canWallJump();
 
 protected:
 	virtual void updatedSpeed();
