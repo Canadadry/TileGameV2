@@ -31,10 +31,10 @@
 #include <Loader/Scene2D.h>
 #include <Graphics/DrawableGroupe.h>
 #include <Graphics/TileMap.h>
-#include <Engine/RessourceManager.h>
+#include <Graphics/RessourceManager.h>
 #include "TileMapTerrain.h"
 #include <Engine/Physics.h>
-#include <Engine/platform/PlatformPhysic.h>
+//#include <Engine/platform/PlatformPhysic.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -59,9 +59,9 @@ void TileGame::render(sf::RenderTarget* screen_surface)
 	Game::render(screen_surface);
 }
 
-void TileGame::update(int elapsedTimeMS)
+void TileGame::update()
 {
-	Game::update(elapsedTimeMS);
+	Game::update();
 }
 
 void TileGame::handleEvent(const sf::Event& event)
@@ -107,7 +107,7 @@ void TileGame::entering()
 		m_map.push_back(map);
 	}
 
-	m_world.setTerrain(m_terrain);
+//	m_world.setTerrain(m_terrain);
 	m_terrain->data = &(m_scene2D->collision[0]);
 	m_terrain->width_in_tile = m_scene2D->width_in_tile;
 	m_terrain->height_in_tile = m_scene2D->height_in_tile;

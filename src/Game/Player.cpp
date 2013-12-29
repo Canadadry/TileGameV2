@@ -29,9 +29,9 @@
 #include "Player.h"
 #include <Engine/Body.h>
 #include <Engine/Physics.h>
-#include <Engine/platform/PlatformPhysic.h>
+//#include <Engine/platform/PlatformPhysic.h>
 #include <Engine/View.h>
-#include <Engine/RessourceManager.h>
+#include <Graphics/RessourceManager.h>
 
 #include "KeyBoardGamePad.h"
 
@@ -43,14 +43,16 @@ Player::Player()
 : Entity()
 {
 
-	setBody(new Body(this));
+	setBody(new Body(*this));
 	body()->setSize(sf::Vector2f(16,16));
 	body()->setPosition(sf::Vector2f(38,38));
 
-	setPhysics(new PlatformPhysic(this));
-	setGamepad(new KeyBoardGamePad(this));
+//	setPhysics(new PlatformPhysic(this));
+	setPhysics(new Physics(*this));
+	this->physics()->gravity = sf::Vector2f(0,0.01);
+	setGamepad(new KeyBoardGamePad(*this));
 
-	setView(new View(this));
+	setView(new View(*this));
 	sf::RectangleShape* shape  = new sf::RectangleShape(sf::Vector2f(16,16));
 	shape->setFillColor(sf::Color::Red);
 	view()->drawable = shape;

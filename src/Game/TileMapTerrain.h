@@ -29,9 +29,10 @@
 #ifndef TILEMAPTERRAIN_H_
 #define TILEMAPTERRAIN_H_
 
-#include <Engine/World.h>
+//#include <Engine/World.h>
+class Body;
 
-class TileMapTerrain : public Terrain
+class TileMapTerrain //: public Terrain
 {
 public:
 	TileMapTerrain();

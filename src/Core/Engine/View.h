@@ -1,47 +1,20 @@
-/*
- * View.h
- *
- * Asteroid - Copyright (c) 12 févr. 2013 - Jerome Mourey
- *
- * This software is provided 'as-is', without any express or
- * implied warranty. In no event will the authors be held
- * liable for any damages arising from the use of this software.
- * 
- * Permission is granted to anyone to use this software for any purpose,
- * including commercial applications, and to alter it and redistribute
- * it freely, subject to the following restrictions:
- * 
- * 1. The origin of this software must not be misrepresented;
- *    you must not claim that you wrote the original software.
- *    If you use this software in a product, an acknowledgment
- *    in the product documentation would be appreciated but
- *    is not required.
- * 
- * 2. Altered source versions must be plainly marked as such,
- *    and must not be misrepresented as being the original software.
- * 
- * 3. This notice may not be removed or altered from any
- *    source distribution.
- *
- *  Created on: 12 févr. 2013
- */
-
 #ifndef VIEW_H_
 #define VIEW_H_
 
 #include <SFML/Graphics/Transformable.hpp>
+#include <Engine/Component.h>
 
 class Entity;
 namespace sf{
 	class Drawable;
 	class RenderTarget;
-	class CircleShape;
+	class RectangleShape;
 }
 
-class View
+class View : public Component
 {
 public:
-	View(Entity* entity);
+	explicit View(Entity& entity);
 	virtual ~View();
 
 	sf::Drawable* drawable;
@@ -50,9 +23,8 @@ public:
 	void render(sf::RenderTarget& screen);
 
 protected:
-	Entity*            m_entity;
-	sf::Transformable  m_transformable;
-	sf::CircleShape*   m_debugDraw;
+	sf::Transformable   m_transformable;
+	sf::RectangleShape* m_debugDraw;
 
 
 };

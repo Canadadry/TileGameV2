@@ -34,7 +34,7 @@
 class KeyBoardGamePad : public GamePad
 {
 public:
-	KeyBoardGamePad(Entity* entity);
+	KeyBoardGamePad(Entity& entity);
 	virtual ~KeyBoardGamePad();
 
 	virtual void handleEvent(const sf::Event& Event);

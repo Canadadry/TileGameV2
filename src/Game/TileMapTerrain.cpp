@@ -44,7 +44,7 @@ TileMapTerrain::~TileMapTerrain()
 bool TileMapTerrain::isColliding(Body* body, bool accumulateCollision)
 {
 	bool ret = false;
-
+/*
 	sf::Vector2f position = body->position();
 	sf::Vector2f size     = body->size();
 	sf::Vector2f size2    = sf::Vector2f(size.x/2.0,size.y/2.0);
@@ -93,7 +93,7 @@ bool TileMapTerrain::isColliding(Body* body, bool accumulateCollision)
 	ret |= isSolide(position.x           , position.y + size.y  );
 	ret |= isSolide(position.x + size2.x , position.y + size.y  );
 	ret |= isSolide(position.x + size.x  , position.y + size.y  );
-
+//*/
 	return ret;
 }
 
