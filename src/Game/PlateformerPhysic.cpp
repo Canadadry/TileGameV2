@@ -7,13 +7,13 @@
 PlateformerPhysic::PlateformerPhysic(Entity& entity,TileMapLand* tilemap)
     : Physics(entity)
     , m_jump_power(10)
-    , m_direction(PlateformerPhysic::Down)
+    , direction(PlateformerPhysic::Down)
 {
     land = tilemap;
-    m_state[PlateformerPhysic::Moving]  = false;
-    m_state[PlateformerPhysic::Running] = false;
-    m_state[PlateformerPhysic::Jumping] = false;
-    m_state[PlateformerPhysic::Falling] = true;
+    state[PlateformerPhysic::Moving]  = false;
+    state[PlateformerPhysic::Running] = false;
+    state[PlateformerPhysic::Jumping] = false;
+    state[PlateformerPhysic::Falling] = true;
 }
 
 PlateformerPhysic::~PlateformerPhysic(){}
@@ -21,9 +21,9 @@ PlateformerPhysic::~PlateformerPhysic(){}
 void  PlateformerPhysic::update()
 {
 
-    if(m_state[PlateformerPhysic::Moving])
+    if(state[PlateformerPhysic::Moving])
     {
-	switch(m_direction)
+	switch(direction)
 	{
 	case PlateformerPhysic::Up    : break;
 	case PlateformerPhysic::Down  : break;
@@ -39,23 +39,24 @@ void  PlateformerPhysic::update()
 
     Physics::update();
 
+    state[PlateformerPhysic::Jumping] = (speed.y != 0);
 }
 
 void PlateformerPhysic::move(Direction dir)
 {
-    m_state[PlateformerPhysic::Moving] = true;
-    m_direction = dir;
+    state[PlateformerPhysic::Moving] = true;
+    direction = dir;
 }
 
 void PlateformerPhysic::stop()
 {
-    m_state[PlateformerPhysic::Moving] = false;
-    m_state[PlateformerPhysic::Running] = false;
+    state[PlateformerPhysic::Moving] = false;
+    state[PlateformerPhysic::Running] = false;
 }
 
 void PlateformerPhysic::running(bool enable)
 {
-    m_state[PlateformerPhysic::Running] = enable;
+    state[PlateformerPhysic::Running] = enable;
 }
 
 bool  PlateformerPhysic::canJump()
@@ -76,11 +77,10 @@ bool  PlateformerPhysic::canJump()
 
 void PlateformerPhysic::jump()
 {
-    printf("state "BYTETOBINARYPATTERN"\n",BYTETOBINARY(m_cornerState));
     if(canJump())
     {
 	{
-	    m_state[PlateformerPhysic::Jumping] = true;
+	    state[PlateformerPhysic::Jumping] = true;
 	    speed.y = -m_jump_power;
 	}
     }

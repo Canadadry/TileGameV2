@@ -27,7 +27,6 @@ void View::update()
     {
 	m_transformable.setPosition(entity.body()->position());
 #ifdef __DEBUG_DRAW__
-	m_debugDraw->setPosition(entity.body()->position());
 	m_debugDraw->setOrigin(entity.body()->origin());
 	m_debugDraw->setSize(entity.body()->size());
 #endif

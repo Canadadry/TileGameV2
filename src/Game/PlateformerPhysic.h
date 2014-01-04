@@ -28,13 +28,13 @@ public:
     void stop();
 
     virtual void  update();
+    Direction    direction;
+    bool         state[4];
 
 protected:
     TileMapLand* tilemap;
     int          m_cornerState;
     float        m_jump_power;
-    Direction    m_direction;
-    bool         m_state[4];
 
 };
 

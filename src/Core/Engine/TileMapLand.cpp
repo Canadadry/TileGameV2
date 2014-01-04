@@ -14,7 +14,7 @@ TileMapLand::~TileMapLand()
 int TileMapLand::checkCornerCollision(Body* body)
 {
     int collidingCorners = 0;
-    sf::Vector2f position = body->position();
+    sf::Vector2f position = body->position() - body->origin();
     sf::Vector2f size     = body->size();
     sf::Vector2f size2    = sf::Vector2f(size.x/2.0,size.y/2.0);
 
