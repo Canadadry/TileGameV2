@@ -10,7 +10,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 
-
 Player::Player(TileMapLand* land)
 : Entity()
 {
@@ -27,7 +26,6 @@ Player::Player(TileMapLand* land)
 	sf::RectangleShape* shape  = new sf::RectangleShape(sf::Vector2f(16,16));
 	shape->setFillColor(sf::Color::Red);
 	view()->drawable = shape;
-
 
 }
 

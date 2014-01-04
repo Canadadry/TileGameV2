@@ -4,7 +4,7 @@
 
 #ifndef NDEBUG
 
-#define ASSERT(condition) do{ if(!(condition)){ fprintf(stderr,"ASSERT FAILED: " #condition " @ " __FILE__  " (" __LINE__ ")/n"); } }while(0)
+#define ASSERT(condition) //do{ if(!(condition)){ fprintf(stderr,"ASSERT FAILED: " #condition " @ " __FILE__  " (" __LINE__ ")/n"); } }while(0)
 
 #else
 

@@ -1,17 +1,15 @@
 #include <Debug/Assert.h>
 #include <Engine/Entity.h>
 #include <Engine/Body.h>
-
+#include <Engine/TileMapLand.h>
 #include "PlateformerPhysic.h"
-#include "TileMapLand.h"
 
-PlateformerPhysic::PlateformerPhysic(Entity& entity,TileMapLand* land)
+PlateformerPhysic::PlateformerPhysic(Entity& entity,TileMapLand* tilemap)
     : Physics(entity)
-    , tilemap(land)
-    , m_cornerState(0)
     , m_jump_power(10)
     , m_direction(PlateformerPhysic::Down)
 {
+    land = tilemap;
     m_state[PlateformerPhysic::Moving]  = false;
     m_state[PlateformerPhysic::Running] = false;
     m_state[PlateformerPhysic::Jumping] = false;
@@ -35,38 +33,12 @@ void  PlateformerPhysic::update()
     }
     else
     {
-	gravity.x*=0.3;
+	gravity.x =0;
+	speed.x*=0.3;
     }
 
     Physics::update();
-    ASSERT(tilemap);
 
-
-    int cornersColliding = m_cornerState = tilemap->checkCornerCollision(entity.body());
-    while(cornersColliding != 0)
-    {
-	if((cornersColliding & TileMapLand::Top) == TileMapLand::Top)
-	{
-	    entity.body()->move(0.0,1.0);
-	    speed.y = 0.0;
-	}
-	else if((cornersColliding & TileMapLand::Bottom) == TileMapLand::Bottom)
-	{
-	    entity.body()->move(0.0,-1.0);
-	    speed.y = 0.0;
-	}
-	else if((cornersColliding & TileMapLand::Left) == TileMapLand::Left)
-	{
-	    entity.body()->move(1.0,0.0);
-	    speed.x = 0.0;
-	}
-	else if((cornersColliding & TileMapLand::Right) == TileMapLand::Right)
-	{
-	    entity.body()->move(-1.0,0.0);
-	    speed.x = 0.0;
-	}
-	cornersColliding = tilemap->checkCornerCollision(entity.body());
-    }
 }
 
 void PlateformerPhysic::move(Direction dir)
@@ -79,7 +51,6 @@ void PlateformerPhysic::stop()
 {
     m_state[PlateformerPhysic::Moving] = false;
     m_state[PlateformerPhysic::Running] = false;
-
 }
 
 void PlateformerPhysic::running(bool enable)
@@ -89,7 +60,7 @@ void PlateformerPhysic::running(bool enable)
 
 bool  PlateformerPhysic::canJump()
 {
-    return  ((m_cornerState & TileMapLand::Bottom) == TileMapLand::Bottom);
+    return  ((cornerState() & TileMapLand::Bottom) == TileMapLand::Bottom);
 }
 
 #define BYTETOBINARYPATTERN "%d%d%d%d%d%d%d%d"

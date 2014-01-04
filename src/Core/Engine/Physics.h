@@ -7,6 +7,7 @@
 class Entity;
 class World;
 class Body;
+class TileMapLand;
 
 
 class Physics : public Component
@@ -20,6 +21,16 @@ public:
     sf::Vector2f speed;
     sf::Vector2f lastPos;
 
+    TileMapLand* land;
+
+    int cornerState() const;
+
+private:
+    void checkTileMapCollision();
+    void handleCornerCollision(int corner, sf::Vector2f direction);
+    void captVector(sf::Vector2f& vector, float maxAmplitude);
+
+    int          m_cornerState;
 };
 
 #endif /* PHYSICS_H_ */
