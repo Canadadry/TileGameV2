@@ -92,6 +92,7 @@ void TileGame::entering()
 	m_terrain->tile_size = m_scene2D->tile_size;
 
 	m_player = new Player(m_terrain);
+	m_player->body()->collideWidth.Connect(this,&TileGame::handlePlayerCollision);
 	m_camera.followBody(m_player->body());
 	addEntity(m_player);
 
@@ -118,4 +119,8 @@ void TileGame::entering()
 }
 
 
+void TileGame::handlePlayerCollision(Body* obstacle)
+{
+    obstacle->entity().destroyThis();
+}
 

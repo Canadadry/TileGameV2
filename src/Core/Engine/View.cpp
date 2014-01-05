@@ -22,13 +22,13 @@ View::~View()
 
 void View::update()
 {
-    ASSERT(entity.body());
-    if(entity.body())
+    ASSERT(entity().body());
+    if(entity().body())
     {
-	m_transformable.setPosition(entity.body()->position());
+	m_transformable.setPosition(entity().body()->position());
 #ifdef __DEBUG_DRAW__
-	m_debugDraw->setOrigin(entity.body()->origin());
-	m_debugDraw->setSize(entity.body()->size());
+	m_debugDraw->setOrigin(entity().body()->origin());
+	m_debugDraw->setSize(entity().body()->size());
 #endif
     }
 }

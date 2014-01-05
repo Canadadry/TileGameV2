@@ -26,6 +26,8 @@ public:
     virtual void update() ;
     virtual void handleEvent(const sf::Event& Event);
 
+    void handlePlayerCollision(Body* obstacle);
+
 protected:
     virtual void entering() ;
 

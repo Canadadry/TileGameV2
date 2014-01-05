@@ -38,7 +38,6 @@ public:
     std::string        name;
     Game*              game;
 
-protected:
     void destroyThis();
 
 private:

@@ -24,15 +24,15 @@ void  Physics::update()
 {
     ASSERT(entity.body());
 
-    lastPos = entity.body()->position();
+    lastPos = entity().body()->position();
     speed += gravity /* * dt*/;
     captVector(speed,max_speed);
-    sf::Vector2f pos = entity.body()->position();
+    sf::Vector2f pos = entity().body()->position();
     pos += speed /* *dt */;
     pos.x = roundf(pos.x);
     pos.y = roundf(pos.y);
 
-    entity.body()->setPosition(pos);
+    entity().body()->setPosition(pos);
 
     if(land != NULL)
     {
@@ -47,7 +47,7 @@ int Physics::cornerState() const
 
 void Physics::checkTileMapCollision()
 {
-    m_cornerState = land->checkCornerCollision(entity.body());
+    m_cornerState = land->checkCornerCollision(entity().body());
     if(m_cornerState != 0)
     {
 	handleCornerCollision(TileMapLand::Bottom      ,sf::Vector2f( 0.0,-1.0));
@@ -64,14 +64,14 @@ void Physics::checkTileMapCollision()
 void Physics::handleCornerCollision(int corner, sf::Vector2f direction)
 {
     bool hasMoved = false;
-    while((land->checkCornerCollision(entity.body()) & corner) == corner)
+    while((land->checkCornerCollision(entity().body()) & corner) == corner)
     {
-	entity.body()->move(direction.x,direction.y);
+	entity().body()->move(direction.x,direction.y);
 	hasMoved = true;
     }
     if(hasMoved)
     {
-	entity.body()->move(-direction.x,-direction.y);
+	entity().body()->move(-direction.x,-direction.y);
 	if(direction.x == 0  ||  direction.y == 0)
 	{
 	    if(direction.x != 0 && (signbit(direction.x) != signbit(speed.x)))

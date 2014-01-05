@@ -16,7 +16,7 @@ KeyBoardGamePad::~KeyBoardGamePad()
 
 void KeyBoardGamePad::handleEvent(const sf::Event& event)
 {
-	PlateformerPhysic& physic = *(PlateformerPhysic*)entity.physics();
+	PlateformerPhysic& physic = *(PlateformerPhysic*)entity().physics();
 	if(event.type == sf::Event::KeyPressed )
 	{
 		if(event.key.code == sf::Keyboard::Left)
