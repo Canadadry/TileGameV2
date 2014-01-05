@@ -7,6 +7,7 @@ class Body;
 
 class Camera
 {
+public:
     Camera(sf::Vector2f screenSize);
 
     void followBody(Body* body);

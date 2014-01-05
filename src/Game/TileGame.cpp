@@ -17,6 +17,11 @@ TileGame::TileGame(int window_width ,int window_height )
 , m_height_in_tile(0)
 , m_terrain(new TileMapLand)
 , m_scene2D(0)
+, m_map()
+, m_camera(sf::Vector2f(window_width,window_height))
+, m_tilesets()
+, m_tilemap()
+, m_tilemap_land(NULL)
 {
 }
 
@@ -33,6 +38,9 @@ void TileGame::render(sf::RenderTarget* screen_surface)
 void TileGame::update()
 {
 	Game::update();
+	m_camera.update();
+	gameView.setCenter(m_camera.origin());
+	//m_map.setOrigin(m_camera.origin());
 }
 
 void TileGame::handleEvent(const sf::Event& event)
@@ -47,6 +55,9 @@ void TileGame::entering()
 
 	m_width_in_tile = m_scene2D->width_in_tile;
 	m_height_in_tile = m_scene2D->height_in_tile;
+
+	//m_map.setPosition(windowWidth()/2, windowHeight()/2);
+	m_camera.setWorldSize(sf::Vector2f(m_width_in_tile*m_scene2D->tile_size,m_height_in_tile*m_scene2D->tile_size));
 
 	m_tilesets.reserve(m_scene2D->tilesetName.size());
 	for(unsigned int i=0;i<m_scene2D->tilesetName.size();i++)
@@ -77,6 +88,7 @@ void TileGame::entering()
 	m_terrain->tile_size = m_scene2D->tile_size;
 
 	player = new Player(m_terrain);
+	m_camera.followBody(player->body());
 	addEntity(player);
 
 }

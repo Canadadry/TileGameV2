@@ -6,6 +6,7 @@
 #include <Engine/Body.h>
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 #include <algorithm>
 
@@ -21,6 +22,8 @@ Game::Game(int window_width,int window_height)
     , m_window_width(window_width)
     , m_window_height(window_height)
 {
+    gameView.setSize(window_width,window_height);
+    gameView.setCenter(window_width/2,window_height/2);
 }
 
 Game::~Game()
@@ -125,6 +128,7 @@ void Game::handleEvent(const sf::Event& Event)
 
 void Game::render(sf::RenderTarget* screen_surface)
 {
+    screen_surface->setView(gameView);
     for(View_it it = m_views.begin(); it != m_views.end();it++)
     {
 	(*it)->update();
