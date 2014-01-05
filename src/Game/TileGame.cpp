@@ -48,14 +48,10 @@ void TileGame::entering()
 	m_width_in_tile = m_scene2D->width_in_tile;
 	m_height_in_tile = m_scene2D->height_in_tile;
 
-	//m_map.setPosition(window_width*m_scene2D->tile_size/2, window_height*m_scene2D->tile_size/2);
-
 	m_tilesets.reserve(m_scene2D->tilesetName.size());
 	for(unsigned int i=0;i<m_scene2D->tilesetName.size();i++)
 	{
 		sf::Texture* text = RessourceManager::texture().load("/"+m_scene2D->tilesetName[i]);
-		//printf("loading texture %s (%dp,%dp)\n",m_scene2D->tilesetName[i].c_str(),text->getSize().x,text->getSize().y);
-
 		m_tilesets.push_back(text);
 	}
 
@@ -66,9 +62,6 @@ void TileGame::entering()
 		Scene2D::Layer& layer = *m_scene2D->layers[i];
 		sf::Texture& tileset = *m_tilesets[layer.tilesetId];
 
-//		printf("new layer found of (%d,%d) tiles (size : %d) using tileset %d\n",
-//				m_scene2D->width_in_tile,m_scene2D->height_in_tile,m_scene2D->tile_size,layer.tilesetId);
-
 		TileMap* map = new TileMap();
 		map->setTileSet(tileset,tileset.getSize().x/m_scene2D->tile_size,tileset.getSize().y/m_scene2D->tile_size);
 		map->setData(m_scene2D->width_in_tile,m_scene2D->height_in_tile,(const unsigned int*)&(layer.data[0]));
@@ -78,7 +71,6 @@ void TileGame::entering()
 		m_map.push_back(map);
 	}
 
-//	m_world.setTerrain(m_terrain);
 	m_terrain->data = &(m_scene2D->collision[0]);
 	m_terrain->width_in_tile = m_scene2D->width_in_tile;
 	m_terrain->height_in_tile = m_scene2D->height_in_tile;
