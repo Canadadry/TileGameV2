@@ -10,6 +10,7 @@ Physics::Physics(Entity& entity)
     : Component (entity)
     , gravity(0.0,0.0)
     , speed (0.0,0.0)
+    , max_speed(10.0,10.0)
     , land(NULL)
     , m_cornerState(0)
 {
@@ -25,8 +26,8 @@ void  Physics::update()
 
     lastPos = entity.body()->position();
     speed += gravity /* * dt*/;
+    captVector(speed,max_speed);
     sf::Vector2f pos = entity.body()->position();
-    captVector(speed,10);
     pos += speed /* *dt */;
     pos.x = roundf(pos.x);
     pos.y = roundf(pos.y);
@@ -86,8 +87,14 @@ void Physics::handleCornerCollision(int corner, sf::Vector2f direction)
 }
 
 
-void Physics::captVector(sf::Vector2f& vector, float maxAmplitude)
+void Physics::captVector(sf::Vector2f& vector, sf::Vector2f maxAmplitude)
 {
-    if(vector.x > maxAmplitude) vector.x = maxAmplitude;
-    if(vector.y > maxAmplitude) vector.y = maxAmplitude;
+//    std::cout << "speed before " << vector.x << "," << vector.y ;
+
+    if(fabs(vector.x) > maxAmplitude.x) vector.x = copysign(maxAmplitude.x,vector.x);
+    if(fabs(vector.y) > maxAmplitude.y) vector.y = copysign(maxAmplitude.y,vector.y);
+
+//    std::cout << " speed after  " << vector.x << "," << vector.y ;
+//    std::cout << std::endl;
+
 }

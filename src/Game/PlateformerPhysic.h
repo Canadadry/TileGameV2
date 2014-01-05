@@ -31,10 +31,10 @@ public:
     Direction    direction;
     bool         state[4];
 
-protected:
-    TileMapLand* tilemap;
-    int          m_cornerState;
-    float        m_jump_power;
+    float jump_power;
+    float walk_speed;
+    float run_speed;
+    float walk_deceleration;
 
 };
 

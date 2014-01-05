@@ -22,7 +22,13 @@ Player::Player(TileMapLand* land)
     body()->setPosition(sf::Vector2f(38,38));
 
     setPhysics(m_plateforme_physics);
-    m_plateforme_physics->gravity = sf::Vector2f(0,0.1);
+    m_plateforme_physics->gravity = sf::Vector2f(0,0.3);
+    m_plateforme_physics->max_speed = sf::Vector2f(2.0,8.0);
+    m_plateforme_physics->jump_power = 8.0;
+    m_plateforme_physics->walk_speed = 2.0;
+    m_plateforme_physics->run_speed  = 3.0;
+    m_plateforme_physics->walk_deceleration = 0.3;
+
 
     setGamepad(new KeyBoardGamePad(*this));
 

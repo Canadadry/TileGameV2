@@ -6,8 +6,11 @@
 
 PlateformerPhysic::PlateformerPhysic(Entity& entity,TileMapLand* tilemap)
     : Physics(entity)
-    , m_jump_power(10)
     , direction(PlateformerPhysic::Down)
+    , jump_power(1)
+    , walk_speed(0.1)
+    , run_speed(1.0)
+    , walk_deceleration(0.3)
 {
     land = tilemap;
     state[PlateformerPhysic::Moving]  = false;
@@ -27,14 +30,14 @@ void  PlateformerPhysic::update()
 	{
 	case PlateformerPhysic::Up    : break;
 	case PlateformerPhysic::Down  : break;
-	case PlateformerPhysic::Left  : gravity.x = -0.1; break;
-	case PlateformerPhysic::Right : gravity.x = 0.1; break;
+	case PlateformerPhysic::Left  : gravity.x = -walk_speed; break;
+	case PlateformerPhysic::Right : gravity.x =  walk_speed; break;
 	}
     }
     else
     {
 	gravity.x =0;
-	speed.x*=0.3;
+	speed.x*=walk_deceleration;
     }
 
     Physics::update();
@@ -57,6 +60,7 @@ void PlateformerPhysic::stop()
 void PlateformerPhysic::running(bool enable)
 {
     state[PlateformerPhysic::Running] = enable;
+    max_speed.x = enable ? run_speed : walk_speed;
 }
 
 bool  PlateformerPhysic::canJump()
@@ -64,24 +68,13 @@ bool  PlateformerPhysic::canJump()
     return  ((cornerState() & TileMapLand::Bottom) == TileMapLand::Bottom);
 }
 
-#define BYTETOBINARYPATTERN "%d%d%d%d%d%d%d%d"
-#define BYTETOBINARY(byte)  \
-    (byte & 0x80 ? 1 : 0), \
-    (byte & 0x40 ? 1 : 0), \
-    (byte & 0x20 ? 1 : 0), \
-    (byte & 0x10 ? 1 : 0), \
-    (byte & 0x08 ? 1 : 0), \
-    (byte & 0x04 ? 1 : 0), \
-    (byte & 0x02 ? 1 : 0), \
-    (byte & 0x01 ? 1 : 0)
-
 void PlateformerPhysic::jump()
 {
     if(canJump())
     {
 	{
 	    state[PlateformerPhysic::Jumping] = true;
-	    speed.y = -m_jump_power;
+	    speed.y = -jump_power;
 	}
     }
 }
