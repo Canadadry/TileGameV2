@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Coin.h"
 #include "TileGame.h"
 #include <Loader/Scene2D.h>
 #include <Graphics/DrawableGroupe.h>
@@ -93,6 +94,26 @@ void TileGame::entering()
 	m_player = new Player(m_terrain);
 	m_camera.followBody(m_player->body());
 	addEntity(m_player);
+
+	for(unsigned int i=0;i<m_scene2D->entities.size();i++)
+	{
+		Scene2D::Entity& entity = m_scene2D->entities[i];
+		Entity* mob = 0;
+		//		printf("entity id is %d\n",entity.entityId);
+		switch(entity.entityId)
+		{
+			case 2 :  break;
+			case 3 :  mob = new Coin(sf::Vector2f(entity.x,entity.y)*(float)m_scene2D->tile_size);break;
+			case 0 :  break;
+			case 1 :  break;
+			default : break;
+		}
+		if(mob != NULL)
+		{
+			addEntity(mob);
+		}
+	}
+
 
 }
 
