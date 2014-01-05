@@ -42,6 +42,8 @@ protected:
     std::vector<TileMap*> m_tilemap;
     TileMapLand* m_tilemap_land;
 
+    Entity* m_player;
+
 };
 
 #endif /* TILEGAME_H_ */

@@ -23,8 +23,7 @@ int main(int argc, char** argv)
 
 	appConf = new INIReader(path+"settings.ini");
 
-	TileGame myGame(320,240);
-	Screen::mainLoop(&myGame,"TileGameV2",320,240);
+	Screen::mainLoop(new TileGame(320,240),"TileGameV2",320,240);
 
 	return 0;
 }

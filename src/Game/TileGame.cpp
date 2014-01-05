@@ -6,10 +6,9 @@
 #include <Graphics/RessourceManager.h>
 #include <Engine/TileMapLand.h>
 #include <Engine/Physics.h>
+#include <Engine/Body.h>
 
 #include <SFML/Graphics.hpp>
-
-Player* player = 0;
 
 TileGame::TileGame(int window_width ,int window_height )
 : Game(window_width ,window_height)
@@ -22,6 +21,7 @@ TileGame::TileGame(int window_width ,int window_height )
 , m_tilesets()
 , m_tilemap()
 , m_tilemap_land(NULL)
+, m_player(NULL)
 {
 }
 
@@ -38,9 +38,12 @@ void TileGame::render(sf::RenderTarget* screen_surface)
 void TileGame::update()
 {
 	Game::update();
+	if(m_player->body()->position().y > (m_height_in_tile+1)*m_scene2D->tile_size )
+	{
+	    setNextScreen(new TileGame(windowWidth(),windowHeight()));
+	}
 	m_camera.update();
 	gameView.setCenter(m_camera.origin());
-	//m_map.setOrigin(m_camera.origin());
 }
 
 void TileGame::handleEvent(const sf::Event& event)
@@ -87,9 +90,9 @@ void TileGame::entering()
 	m_terrain->height_in_tile = m_scene2D->height_in_tile;
 	m_terrain->tile_size = m_scene2D->tile_size;
 
-	player = new Player(m_terrain);
-	m_camera.followBody(player->body());
-	addEntity(player);
+	m_player = new Player(m_terrain);
+	m_camera.followBody(m_player->body());
+	addEntity(m_player);
 
 }
 
