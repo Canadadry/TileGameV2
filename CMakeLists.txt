@@ -11,7 +11,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/Core)
 
 file( GLOB_RECURSE SRC_LIST src/* )
 
-add_executable(${PROJECT_NAME} ${SRC_LIST})
+add_executable(${PROJECT_NAME} ${SRC_LIST} README.md TODO.txt)
 
 
 # Detect and add SFML
