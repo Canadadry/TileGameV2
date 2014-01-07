@@ -1,0 +1,11 @@
+mario.png 5 2 8 24
+stopped_left 100 0
+moving_left 100 0 1 2 1 
+running_left 70 0 1 2 1
+jumping_left 100 3
+stopped_right 100 5
+moving_right 100 5 6 7 6 
+running_right 70 5 6 7 6 
+jumping_right 100 8
+
+
