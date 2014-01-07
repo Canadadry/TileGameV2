@@ -93,7 +93,7 @@ void Screen::mainLoop(Screen* first_screen, std::string gameName ,int window_wid
 	}
 
 	m_window->setActive(true);
-	m_window->clear(sf::Color::Black);
+	m_window->clear(sf::Color(192,248,248));
 	m_current->display(m_window);
 	m_window->display();
 
