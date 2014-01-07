@@ -22,10 +22,10 @@ public:
 	virtual void update();
 	void render(sf::RenderTarget& screen);
 
-protected:
+private:
 	sf::Transformable   m_transformable;
 	sf::RectangleShape* m_debugDraw;
-
+	bool m_enable_debugDraw;
 
 };
 

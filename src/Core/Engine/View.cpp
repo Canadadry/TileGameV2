@@ -11,8 +11,11 @@ View::View(Entity& entity)
     , drawable(0)
     , m_transformable()
     , m_debugDraw(new sf::RectangleShape())
+    , m_enable_debugDraw(false)
 {
-    m_debugDraw->setFillColor(sf::Color::Red);
+    m_debugDraw->setOutlineColor(sf::Color::Red);
+    m_debugDraw->setFillColor(sf::Color::Transparent);
+    m_debugDraw->setOutlineThickness(2.0);
 }
 
 View::~View()
@@ -20,16 +23,18 @@ View::~View()
 
 }
 
+
 void View::update()
 {
     ASSERT(entity().body());
     if(entity().body())
     {
 	m_transformable.setPosition(entity().body()->position());
-#ifdef __DEBUG_DRAW__
-	m_debugDraw->setOrigin(entity().body()->origin());
-	m_debugDraw->setSize(entity().body()->size());
-#endif
+	if(m_enable_debugDraw)
+	{
+	    m_debugDraw->setOrigin(entity().body()->origin());
+	    m_debugDraw->setSize(entity().body()->size());
+	}
     }
 }
 
@@ -37,11 +42,8 @@ void View::render(sf::RenderTarget& screen)
 {
     sf::RenderStates states;
     states.transform = m_transformable.getTransform();
-#ifdef __DEBUG_DRAW__
-    screen.draw(*m_debugDraw,states);
-#else
+    if(m_enable_debugDraw) screen.draw(*m_debugDraw,states);
     screen.draw(*drawable,states);
-#endif
 }
 
 

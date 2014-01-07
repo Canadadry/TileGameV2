@@ -16,6 +16,8 @@ Player::Player(TileMapLand* land)
     , m_plateforme_physics(new PlateformerPhysic(*this,land))
 {
 
+    name =  "Player";
+
     setBody(new Body(*this));
     body()->setSize(sf::Vector2f(16,16));
     body()->setOrigin(sf::Vector2f(8,8));

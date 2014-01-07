@@ -6,33 +6,52 @@
 #include <Engine/Component.h>
 #include <Signal/Signal.h>
 
+#include <list>
+
+class Body;
+
+struct Contact
+{
+    Body* thisBody;
+    Body* body;
+    bool valid;
+};
+
 class Body : public Component
 {
 public:
-	explicit Body(Entity& entity);
-	virtual ~Body();
+    explicit Body(Entity& entity);
+    virtual ~Body();
 
-	void setOrigin(sf::Vector2f origin);
-	void setPosition(sf::Vector2f position);
-	void setSize(sf::Vector2f size);
-	sf::Vector2f position() const;
-	sf::Vector2f origin() const;
-	sf::Vector2f size() const;
+    void setOrigin(sf::Vector2f origin);
+    void setPosition(sf::Vector2f position);
+    void setSize(sf::Vector2f size);
+    sf::Vector2f position() const;
+    sf::Vector2f origin() const;
+    sf::Vector2f size() const;
 
-	void move(float x, float y);
+    void move(float x, float y);
 
-	bool intersects(const Body& body) const;
+    bool intersects(const Body& body) const;
 
-	Signal1< Body* >      collideWidth;
-	int collideCategory;
-	int collisionMask;
-//	bool isDynamic;
+    Signal1< Body* >      beginCollideWidth;
+    Signal1< Body* >      endCollideWidth;
+
+
+    void updateCollision(Body& body);
+    virtual void update() ;
+    void updateCollideList();
+
+    int collideCategory;
+    int collisionMask;
+    //	bool isDynamic;
 
 private:
-	Entity* m_entity;
-	sf::FloatRect m_aabb;
-	sf::Vector2f m_origin;
-	sf::Vector2f m_computedPosition;
+    Entity* m_entity;
+    sf::FloatRect m_aabb;
+    sf::Vector2f m_origin;
+    sf::Vector2f m_computedPosition;
+    std::list<Contact> m_contactVector;
 
 };
 

@@ -6,7 +6,7 @@
 #include <Engine/Body.h>
 
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include <algorithm>
 
@@ -18,7 +18,8 @@ typedef  std::list<Body*>::iterator Body_it;
 typedef  std::list<Body*>::const_iterator ConstBody_it;
 
 Game::Game(int window_width,int window_height)
-    : m_entities()
+    : Screen()
+    , m_entities()
     , m_window_width(window_width)
     , m_window_height(window_height)
 {
@@ -128,7 +129,6 @@ void Game::handleEvent(const sf::Event& Event)
 
 void Game::render(sf::RenderTarget* screen_surface)
 {
-    screen_surface->setView(gameView);
     for(View_it it = m_views.begin(); it != m_views.end();it++)
     {
 	(*it)->update();
@@ -146,8 +146,18 @@ void Game::update()
     {
 	(*it)->update();
     }
+    for(Body_it it = m_bodies.begin(); it != m_bodies.end();it++)
+    {
+	(*it)->update();
+    }
 
     checkCollision();
+
+    for(Body_it it = m_bodies.begin(); it != m_bodies.end();it++)
+    {
+	(*it)->updateCollideList();
+    }
+
 
     for(Entity_it it = m_entities.begin(); it != m_entities.end();it++)
     {
@@ -158,6 +168,8 @@ void Game::update()
 	destroyedEntity(*it);
     }
     m_entities_to_destroyed.clear();
+
+    window()->setView(gameView);
 }
 
 void Game::checkCollision()
@@ -177,14 +189,13 @@ void Game::checkCollision()
 		{
 		    if(b1->intersects(*b2))
 		    {
-			if(b1intersted) b1->collideWidth(b2);
-			if(b2intersted) b2->collideWidth(b1);
+			if(b1intersted) b1->updateCollision(*b2);
+			if(b2intersted) b2->updateCollision(*b1);
 		    }
 		}
 	    }
 	}
     }
-
 }
 
 int Game::windowHeight() const

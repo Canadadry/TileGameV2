@@ -1,11 +1,17 @@
 #include "Body.h"
 #include <cmath>
+#include <algorithm>
+
+
+typedef  std::list<Contact>::iterator Contact_it;
 
 Body::Body(Entity& entity)
     : Component(entity)
     , m_aabb(0.0,0.0,0.0,0.0)
     , m_origin(0.0,0.0)
     , m_computedPosition(0.0,0.0)
+    , collideCategory(0)
+    , collisionMask(0)
 {
 }
 
@@ -58,4 +64,45 @@ bool Body::intersects(const Body& body)const
 {
     sf::FloatRect intersection;
     return m_aabb.intersects(body.m_aabb,intersection);
+}
+
+
+void Body::updateCollision(Body& body)
+{
+    for(Contact_it it = m_contactVector.begin(); it != m_contactVector.end();it++)
+    {
+	if((*it).body == &body)
+	{
+	    (*it).valid = true;
+	    return;
+	}
+    }
+    Contact contact;
+    contact.thisBody = this;
+    contact.body = &body;
+    contact.valid = true;
+    m_contactVector.push_back(contact);
+    beginCollideWidth(&body);
+
+
+}
+
+void Body::update()
+{
+    for(Contact_it it = m_contactVector.begin(); it != m_contactVector.end();it++)
+    {
+	(*it).valid = false;
+    }
+}
+
+bool isNotValid (Contact& c)
+{
+    if(c.valid) return false;
+    c.body->endCollideWidth(c.thisBody);
+    return true;
+}
+
+void Body::updateCollideList()
+{
+    std::remove_if(m_contactVector.begin(),m_contactVector.end(),&isNotValid);
 }
