@@ -40,6 +40,7 @@ void View::update()
 
 void View::render(sf::RenderTarget& screen)
 {
+    ASSERT(drawable);
     sf::RenderStates states;
     states.transform = m_transformable.getTransform();
     if(m_enable_debugDraw) screen.draw(*m_debugDraw,states);

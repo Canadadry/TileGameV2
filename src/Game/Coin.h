@@ -14,7 +14,7 @@ public:
 	Coin(sf::Vector2f pos);
 	virtual ~Coin();
 
-	virtual void update();
+
 private:
 	AnimatedTile* m_sprite;
 

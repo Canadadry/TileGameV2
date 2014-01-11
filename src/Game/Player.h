@@ -3,7 +3,8 @@
 
 #include <Engine/Entity.h>
 
-class AnimatedTile;
+
+class AnimatedSpriteView;
 class TileMapLand;
 class PlateformerPhysic;
 
@@ -15,7 +16,7 @@ public:
 
 	virtual void update();
 private:
-	AnimatedTile* m_sprite;
+	AnimatedSpriteView* m_sprite_view;
 	PlateformerPhysic* m_plateforme_physics;
 
 };

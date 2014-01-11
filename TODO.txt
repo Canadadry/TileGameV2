@@ -1,7 +1,7 @@
 Done - Add begin collision and end collision
 Done - Fix bug collision
 Postponed - Add parallax backgroung
-Add description Animation file (no more code just a load animFromFile)
+Done - Add description Animation file (no more code just a load animFromFile)
 Add goomba
 Add TitleScreen
 Add Transition
