@@ -3,9 +3,10 @@ Done - Fix bug collision
 Postponed - Add parallax backgroung
 Done - Add description Animation file (no more code just a load animFromFile)
 Add goomba
-Add TitleScreen
-Add Transition
-Add HUD
-Add endScreen
 Add second Level
 Change Asset
+Work on physics
+Add TitleScreen
+Add HUD
+Add endScreen
+Add Transition
