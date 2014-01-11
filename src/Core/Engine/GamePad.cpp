@@ -9,3 +9,8 @@ GamePad::~GamePad()
 {
 }
 
+
+void GamePad::handleEvent(const sf::Event& Event)
+{
+
+}

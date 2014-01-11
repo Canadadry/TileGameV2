@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Coin.h"
+#include "Enemy.h"
 #include "TileGame.h"
 #include <Loader/Scene2D.h>
 #include <Graphics/DrawableGroupe.h>
@@ -103,8 +104,8 @@ void TileGame::entering()
 		//		printf("entity id is %d\n",entity.entityId);
 		switch(entity.entityId)
 		{
-			case 2 :  break;
-			case 3 :  mob = new Coin(sf::Vector2f(entity.x,entity.y)*(float)m_scene2D->tile_size);break;
+			case 2 :  mob = new Enemy(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size,m_terrain);break;
+			case 3 :  mob = new Coin(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size);break;
 			case 0 :  break;
 			case 1 :  break;
 			default : break;
@@ -121,6 +122,6 @@ void TileGame::entering()
 
 void TileGame::handlePlayerCollision(Body* obstacle)
 {
-    obstacle->entity().destroyThis();
+    if(obstacle->entity().name == "Coin") obstacle->entity().destroyThis();
 }
 

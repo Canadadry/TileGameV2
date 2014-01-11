@@ -11,7 +11,6 @@
 
 Coin::Coin(sf::Vector2f pos)
     : Entity()
-    , m_sprite(new AnimatedTile)
 {
 
     setBody(new Body(*this));

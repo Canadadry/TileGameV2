@@ -13,7 +13,7 @@ public:
 	explicit GamePad(Entity& entity);
 	virtual ~GamePad();
 
-	virtual void handleEvent(const sf::Event& Event) =0;
+	virtual void handleEvent(const sf::Event& Event);
 
 };
 
