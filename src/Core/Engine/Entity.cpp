@@ -1,5 +1,10 @@
 #include <Engine/Entity.h>
 #include <Debug/Assert.h>
+#include <Engine/Body.h>
+#include <Engine/Physics.h>
+#include <Engine/View.h>
+#include <Engine/GamePad.h>
+
 Entity::Entity()
     : m_body         (0)
     , m_physics      (0)
@@ -8,7 +13,13 @@ Entity::Entity()
     , m_isAlive      (true)
 {}
 
-Entity::~Entity(){}
+Entity::~Entity()
+{
+    if(m_body    != NULL) delete m_body;
+    if(m_view    != NULL) delete m_view;
+    if(m_physics != NULL) delete m_physics;
+    if(m_gamepad != NULL) delete m_gamepad;
+}
 
 void Entity::update(){}
 
