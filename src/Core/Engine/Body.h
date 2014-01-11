@@ -53,6 +53,8 @@ private:
     sf::Vector2f m_computedPosition;
     std::list<Contact> m_contactVector;
 
+    void clearContactWith(Body* body);
+
 };
 
 #endif /* BODY_H_ */

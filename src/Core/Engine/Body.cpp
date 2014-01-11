@@ -17,6 +17,11 @@ Body::Body(Entity& entity)
 
 Body::~Body()
 {
+    for(Contact_it it = m_contactVector.begin(); it != m_contactVector.end();it++)
+    {
+	(*it).body->clearContactWith(this);
+    }
+
 }
 
 void Body::move(float x, float y)
@@ -105,4 +110,17 @@ bool isNotValid (Contact& c)
 void Body::updateCollideList()
 {
     std::remove_if(m_contactVector.begin(),m_contactVector.end(),&isNotValid);
+}
+
+
+void Body::clearContactWith(Body* body)
+{
+    for(Contact_it it = m_contactVector.begin(); it != m_contactVector.end();it++)
+    {
+	if((*it).body == body)
+	{
+	    m_contactVector.erase(it);
+	    break;
+	}
+    }
 }
