@@ -15,6 +15,9 @@ public:
 	virtual ~Player();
 
 	virtual void update();
+
+	bool hitEnemy;
+
 private:
 	AnimatedSpriteView* m_sprite_view;
 	PlateformerPhysic* m_plateforme_physics;

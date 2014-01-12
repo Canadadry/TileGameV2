@@ -17,6 +17,7 @@
 
 Player::Player(TileMapLand* land)
     : Entity()
+    , hitEnemy(false)
     , m_sprite_view(new AnimatedSpriteView(*this,"Animation/player.txt"))
     , m_plateforme_physics(new PlateformerPhysic(*this,land))
 {
@@ -48,6 +49,13 @@ Player::~Player()
 
 void Player::update()
 {
+    if(hitEnemy)
+    {
+	  m_plateforme_physics->state[PlateformerPhysic::Jumping] = true;
+	  m_plateforme_physics->speed.y = -5.0;
+	  hitEnemy = false;
+    }
+
     int line = 0;
     if(m_plateforme_physics->direction == PlateformerPhysic::Left) line = 1;
 

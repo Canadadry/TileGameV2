@@ -123,6 +123,7 @@ void TileGame::handlePlayerCollision(Body* obstacle)
 	if(m_player->physics()->speed.y > 0 && m_player->body()->position().y<obstacle->position().y)
 	{
 	    obstacle->entity().destroyThis();
+	    ((Player*)m_player)->hitEnemy = true;
 	}
 	else
 	{
