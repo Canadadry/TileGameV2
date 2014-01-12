@@ -5,6 +5,7 @@ Done - Add description Animation file (no more code just a load animFromFile)
 Done - Add goomba
 Add second Level
 Change Asset
+Add lua scripting
 Work on physics
 Add TitleScreen
 Add HUD
