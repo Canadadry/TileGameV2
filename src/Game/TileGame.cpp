@@ -2,6 +2,7 @@
 #include "Coin.h"
 #include "Enemy.h"
 #include "TileGame.h"
+#include "PlateformerPhysic.h"
 #include <Loader/Scene2D.h>
 #include <Graphics/DrawableGroupe.h>
 #include <Graphics/TileMap.h>
@@ -104,8 +105,8 @@ void TileGame::entering()
 	//		printf("entity id is %d\n",entity.entityId);
 	switch(entity.entityId)
 	{
-	case 2 : addEntityt(new Enemy(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size,m_terrain));break;
-	case 3 :  addEntityt(new Coin(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size));break;
+	case 2 :  addEntity(new Enemy(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size,m_terrain));break;
+	case 3 :  addEntity(new Coin(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size));break;
 	case 0 :  break;
 	case 1 :  break;
 	default : break;
@@ -117,5 +118,17 @@ void TileGame::entering()
 void TileGame::handlePlayerCollision(Body* obstacle)
 {
     if(obstacle->entity().name == "Coin") obstacle->entity().destroyThis();
+    else if(obstacle->entity().name == "Enemy")
+    {
+	if(m_player->physics()->speed.y > 0 && m_player->body()->position().y<obstacle->position().y)
+	{
+	    obstacle->entity().destroyThis();
+	}
+	else
+	{
+	    setNextScreen(new TileGame(windowWidth(),windowHeight()));
+	}
+
+    }
 }
 
