@@ -3,7 +3,7 @@ Done - Fix bug collision
 Postponed - Add parallax backgroung
 Done - Add description Animation file (no more code just a load animFromFile)
 Done - Add goomba
-Add second Level
+Done - Add second Level
 Change Asset
 Add lua scripting
 Work on physics

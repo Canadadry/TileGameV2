@@ -246,6 +246,8 @@ bool Scene2D::loadingEntities(std::vector<int>& layerEntity)
 						found_player = true;
 						PRINT("found player\n");
 					}
+					entities.push_back(entity);
+
 				}
 				else
 				{
