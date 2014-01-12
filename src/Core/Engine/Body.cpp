@@ -1,6 +1,7 @@
 #include "Body.h"
 #include <cmath>
 #include <algorithm>
+#include <Engine/Entity.h>
 
 
 typedef  std::list<Contact>::iterator Contact_it;
@@ -100,16 +101,17 @@ void Body::update()
     }
 }
 
-bool isNotValid (Contact& c)
-{
-    if(c.valid) return false;
-    c.body->endCollideWidth(c.thisBody);
-    return true;
-}
-
 void Body::updateCollideList()
 {
-    std::remove_if(m_contactVector.begin(),m_contactVector.end(),&isNotValid);
+    for(Contact_it it = m_contactVector.begin(); it != m_contactVector.end();it++)
+    {
+	if(!(*it).valid)
+	{
+	    (*it).body->endCollideWidth((*it).thisBody);
+	    m_contactVector.erase(it);
+	    break;
+	}
+    }
 }
 
 

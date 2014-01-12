@@ -63,7 +63,6 @@ void Game::addEntity(Entity* entity)
     if(entity->body())
     {
 	m_bodies.push_back(entity->body());
-	//		m_world.addBody(entity->body());
     }
 }
 
@@ -110,7 +109,6 @@ void Game::destroyedEntity(Entity* entity)
 	if(entity->body())
 	{
 	    m_bodies.remove(entity->body());
-	    //			m_world.removeBody(entity->body());
 	}
 
 
