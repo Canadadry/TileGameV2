@@ -4,10 +4,20 @@ Postponed - Add parallax backgroung
 Done - Add description Animation file (no more code just a load animFromFile)
 Done - Add goomba
 Done - Add second Level
-Change Asset
-Add lua scripting
+PostPoned Change Asset
+Add json entity descriptor
+    * add component factory
+    * defining component for an entity
+    * add properties
+    * can change defaut value for each component
 Work on physics
+    * jump power link to duration of user impulsion. The longer you press the higher you jump
+    * in the air you can't change direction just slow to reduction jump distance
+Add lua scripting
+    * extending certain component in lua
+    * enabling writing component directly from lua
 Add TitleScreen
 Add HUD
 Add endScreen
 Add Transition
+Add GUI
