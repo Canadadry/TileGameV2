@@ -14,3 +14,8 @@ void GamePad::handleEvent(const sf::Event& Event)
 {
 
 }
+
+Component* GamePad::build(Entity* entity,JSONValue& param)
+{
+    return new GamePad(*entity);
+}

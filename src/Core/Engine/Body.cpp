@@ -2,7 +2,33 @@
 #include <cmath>
 #include <algorithm>
 #include <Engine/Entity.h>
+#include <Loader/JSON/JSON.h>
 
+
+static float getNumber(JSONObject& obj, std::wstring paramName , double defaultValue = 0.0)
+{
+    if (obj.find(paramName) != obj.end() && obj[paramName]->IsNumber())
+    {
+	return obj[paramName]->AsNumber();
+    }
+    return defaultValue;
+}
+
+Component* Body::build(Entity* entity,JSONValue& param)
+{
+    // Retrieve the main object
+    JSONObject root;
+    if (param.IsObject() == true)
+    {
+	root = param.AsObject();
+
+	Body* component = new Body(*entity);
+	component->setSize(sf::Vector2f(getNumber(root,L"sizeX"),getNumber(root,L"sizeY")));
+	component->setOrigin(sf::Vector2f(getNumber(root,L"originX"),getNumber(root,L"originY")));
+	return component;
+    }
+    return NULL;
+}
 
 typedef  std::list<Contact>::iterator Contact_it;
 
@@ -113,7 +139,6 @@ void Body::updateCollideList()
 	}
     }
 }
-
 
 void Body::clearContactWith(Body* body)
 {

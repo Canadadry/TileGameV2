@@ -46,6 +46,8 @@ public:
     int collisionMask;
     //	bool isDynamic;
 
+    static Component* build(Entity* entity,JSONValue& param);
+
 private:
     Entity* m_entity;
     sf::FloatRect m_aabb;

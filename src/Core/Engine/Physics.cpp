@@ -5,6 +5,33 @@
 #include <Debug/Assert.h>
 
 #include <cmath>
+#include <Loader/JSON/JSON.h>
+
+
+static float getNumber(JSONObject& obj, std::wstring paramName , double defaultValue = 0.0)
+{
+    if (obj.find(paramName) != obj.end() && obj[paramName]->IsNumber())
+    {
+	return obj[paramName]->AsNumber();
+    }
+    return defaultValue;
+}
+
+Component* Physics::build(Entity* entity,JSONValue& param)
+{
+    // Retrieve the main object
+    JSONObject root;
+    if (param.IsObject() == true)
+    {
+	root = param.AsObject();
+
+	Physics* component = new Physics(*entity);
+	component->gravity = (sf::Vector2f(getNumber(root,L"gravityX"),getNumber(root,L"gravityY")));
+	component->max_speed = (sf::Vector2f(getNumber(root,L"max_speedX"),getNumber(root,L"max_speedY")));
+	return component;
+    }
+    return NULL;
+}
 
 Physics::Physics(Entity& entity)
     : Component (entity)

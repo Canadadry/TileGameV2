@@ -9,13 +9,14 @@ Add json entity descriptor
     * add component factory
     * defining component for an entity
     * add properties
-    * can change defaut value for each component
+    * can change default value for each component
+    * How to handle animation selection in player class ?????
 Work on physics
     * jump power link to duration of user impulsion. The longer you press the higher you jump
     * in the air you can't change direction just slow to reduction jump distance
 Add lua scripting
-    * extending certain component in lua
-    * enabling writing component directly from lua
+    * extending certain component with lua
+    * enabling writing component directly with lua
 Add TitleScreen
 Add HUD
 Add endScreen

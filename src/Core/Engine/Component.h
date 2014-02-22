@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 class Entity;
+class JSONValue;
 
 class Component
 {
@@ -12,6 +13,9 @@ public:
     Entity& entity() const;
 
     virtual void update() ;
+
+    static Component* build(Entity* entity,JSONValue& param);
+
 protected:
     Entity& m_entity;
 };

@@ -9,6 +9,8 @@ class World;
 class Body;
 class TileMapLand;
 
+class JSONValue;
+
 
 class Physics : public Component
 {
@@ -25,6 +27,8 @@ public:
     TileMapLand* land;
 
     int cornerState() const;
+
+    static Component* build(Entity* entity,JSONValue& param);
 
 private:
     void checkTileMapCollision();
