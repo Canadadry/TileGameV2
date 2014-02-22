@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(TileGameV2)
 
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules" ${CMAKE_MODULE_PATH})
+
 # Enable debug symbols by default
 if(CMAKE_BUILD_TYPE STREQUAL "")
   set(CMAKE_BUILD_TYPE Release)

@@ -6,6 +6,10 @@
 
 #include <cmath>
 
+float roundf(float x)
+{
+   return x >= 0.0f ? floorf(x + 0.5f) : ceilf(x - 0.5f);
+}
 Physics::Physics(Entity& entity)
     : Component (entity)
     , gravity(0.0,0.0)
@@ -74,11 +78,11 @@ void Physics::handleCornerCollision(int corner, sf::Vector2f direction)
 	entity().body()->move(-direction.x,-direction.y);
 	if(direction.x == 0  ||  direction.y == 0)
 	{
-	    if(direction.x != 0 && (signbit(direction.x) != signbit(speed.x)))
+	if(direction.x != 0 && direction.x*speed.x< 0)//(signbit(direction.x) != signbit(speed.x)))
 	    {
 		speed.x = 0;
 	    }
-	    if(direction.y != 0 && (signbit(direction.y) != signbit(speed.y)))
+	if(direction.y != 0 && direction.y*speed.y< 0)//(signbit(direction.y) != signbit(speed.y)))
 	    {
 		speed.y = 0;
 	    }
@@ -91,9 +95,17 @@ void Physics::captVector(sf::Vector2f& vector, sf::Vector2f maxAmplitude)
 {
 //    std::cout << "speed before " << vector.x << "," << vector.y ;
 
-    if(fabs(vector.x) > maxAmplitude.x) vector.x = copysign(maxAmplitude.x,vector.x);
-    if(fabs(vector.y) > maxAmplitude.y) vector.y = copysign(maxAmplitude.y,vector.y);
+//    if(fabs(vector.x) > maxAmplitude.x) vector.x = copysign(maxAmplitude.x,vector.x);
+//    if(fabs(vector.y) > maxAmplitude.y) vector.y = copysign(maxAmplitude.y,vector.y);
 
+	if(fabs(vector.x) > maxAmplitude.x)
+	{
+	    vector.x = vector.x > 0 ? maxAmplitude.x : -maxAmplitude.x;
+	}
+	if(fabs(vector.y) > maxAmplitude.y)
+	{
+	    vector.y = vector.y > 0 ? maxAmplitude.y : -maxAmplitude.y;
+	}
 //    std::cout << " speed after  " << vector.x << "," << vector.y ;
 //    std::cout << std::endl;
 

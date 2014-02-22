@@ -2,6 +2,8 @@
 #define ANIMATED_SPRITE_VIEW_H_
 
 #include <Engine/View.h>
+#include <string>
+
 
 class AnimatedTile;
 

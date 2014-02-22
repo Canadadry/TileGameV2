@@ -10,20 +10,27 @@ INIReader* appConf;
 int main(int argc, char** argv)
 {
 
-	srand(time(NULL));
-	printf("build time %s\n",__TIME__);
+    srand(time(NULL));
+    printf("build time %s\n",__TIME__);
 
-	std::string path = argv[0];
-	path = path.substr(0,path.rfind("/"));
-	path = path.substr(0,path.rfind("/"));
-	path = path.substr(0,path.rfind("/"));
-	path += "/Resources/";
+#ifdef __APPLE__
+    std::string path = argv[0];
+    path = path.substr(0,path.rfind("/"));
+    path = path.substr(0,path.rfind("/"));
+    path = path.substr(0,path.rfind("/"));
+    path += "/Resources/";
+#elif _WIN32
+    std::string path = argv[0];
+    path = path.substr(0,path.rfind("\\"));
+    path = path.substr(0,path.rfind("\\"));
+    path = path.substr(0,path.rfind("\\"));
+    path += "\\Resources\\";
+#endif
+    RessourceManager::Init(path);
 
-	RessourceManager::Init(path);
+    appConf = new INIReader(path+"settings.ini");
 
-	appConf = new INIReader(path+"settings.ini");
+    Screen::mainLoop(new TileGame(320,240),"TileGameV2",320,240);
 
-	Screen::mainLoop(new TileGame(320,240),"TileGameV2",320,240);
-
-	return 0;
+    return 0;
 }
