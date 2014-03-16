@@ -9,23 +9,16 @@
 class EntityBuilder : public RegisterToFactory<EntityBuilder,Entity>, public Initialisable
 {
 public :
-    EntityBuilder();
     virtual bool selfInitilalise(void* context);
 };
 
 class BodyBuilder : public RegisterToFactory<BodyBuilder,Body>, public Initialisable
 {
 public :
-    BodyBuilder();
     virtual bool selfInitilalise(void* context);
 };
 
-class ViewBuilder : public RegisterToFactory<ViewBuilder,View>, public Initialisable
-{
-public :
-    ViewBuilder();
-    virtual bool selfInitilalise(void* context);
-};
+class ViewBuilder : public RegisterToFactory<ViewBuilder,View>{};
 
 
 #endif // __BASIC_ENGINE_TYPE__
