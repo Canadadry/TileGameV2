@@ -20,7 +20,7 @@ TileGame::TileGame(int window_width ,int window_height )
     : Game(window_width ,window_height)
     , m_width_in_tile(0)
     , m_height_in_tile(0)
-    , m_terrain(new TileMapLand)
+    //, m_terrain(new TileMapLand)
     , m_scene2D(0)
     , m_map()
     , m_camera(sf::Vector2f(window_width,window_height))
@@ -29,6 +29,7 @@ TileGame::TileGame(int window_width ,int window_height )
     , m_tilemap_land(NULL)
     , m_player(NULL)
 {
+    m_terrain = new TileMapLand;
 }
 
 TileGame::~TileGame()

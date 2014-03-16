@@ -34,7 +34,7 @@ protected:
     int m_width_in_tile;
     int m_height_in_tile;
 
-    TileMapLand* m_terrain;
+//    TileMapLand* m_terrain;
     Scene2D* m_scene2D;
 
     DrawableGroupe m_map;

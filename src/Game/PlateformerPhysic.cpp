@@ -4,7 +4,7 @@
 #include <Engine/TileMapLand.h>
 #include "PlateformerPhysic.h"
 
-PlateformerPhysic::PlateformerPhysic(TileMapLand* tilemap)
+PlateformerPhysic::PlateformerPhysic(/*TileMapLand* tilemap*/)
     : Physics()
     , direction(PlateformerPhysic::Down)
     , jump_power(1)
@@ -12,7 +12,7 @@ PlateformerPhysic::PlateformerPhysic(TileMapLand* tilemap)
     , run_speed(1.0)
     , walk_deceleration(0.3)
 {
-    land = tilemap;
+//    land = tilemap;
     state[PlateformerPhysic::Moving]  = false;
     state[PlateformerPhysic::Running] = false;
     state[PlateformerPhysic::Jumping] = false;

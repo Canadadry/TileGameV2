@@ -156,7 +156,6 @@ void Game::update()
 	(*it)->updateCollideList();
     }
 
-
     for(Entity_it it = m_entities.begin(); it != m_entities.end();it++)
     {
 	(*it)->update();

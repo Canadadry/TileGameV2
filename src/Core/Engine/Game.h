@@ -14,7 +14,7 @@ class View;
 class GamePad;
 class Body;
 class Physics;
-
+class TileMapLand;
 
 class Game: public Screen
 {
@@ -32,6 +32,7 @@ public:
     Signal1<Entity*> entityRemoved;
 
     sf::View gameView;
+    TileMapLand* m_terrain;
 
 protected:
     void addEntity(Entity* entity);
@@ -40,7 +41,6 @@ protected:
     void clear();
     void checkCollision();
 
-//    World               m_world;
 
 private:
     std::list<Entity*>  m_entities_to_destroyed;

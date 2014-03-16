@@ -19,7 +19,7 @@ Player::Player(TileMapLand* land)
     : Entity()
     , hitEnemy(false)
     , m_sprite_view(new AnimatedSpriteView("Animation/player.txt"))
-    , m_plateforme_physics(new PlateformerPhysic(land))
+    , m_plateforme_physics(new PlateformerPhysic(/*land*/))
 {
     name =  L"Player";
 

@@ -3,6 +3,8 @@
 #include <Engine/Body.h>
 #include <Engine/TileMapLand.h>
 #include <Debug/Assert.h>
+#include <Engine/Screen.h>
+#include <Engine/Game.h>
 
 #include <cmath>
 
@@ -38,6 +40,15 @@ void  Physics::update()
     if(land != NULL)
     {
 	checkTileMapCollision();
+    }
+    else
+    {
+	if( dynamic_cast<Game*>(Screen::current())->m_terrain != NULL )
+	{
+	    land = dynamic_cast<Game*>(Screen::current())->m_terrain;
+	    checkTileMapCollision();
+	}
+
     }
 }
 

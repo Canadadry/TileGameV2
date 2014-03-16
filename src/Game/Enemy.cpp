@@ -13,7 +13,7 @@
 
 Enemy::Enemy(sf::Vector2f pos,TileMapLand* land)
     : Entity()
-    , m_plateforme_physics(new PlateformerPhysic(land))
+    , m_plateforme_physics(new PlateformerPhysic(/*land*/))
 {
 
     setBody(new Body());

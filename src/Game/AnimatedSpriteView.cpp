@@ -10,6 +10,13 @@
 #include <sstream>
 #include <iostream>
 
+AnimatedSpriteView::AnimatedSpriteView()
+    : View()
+    , m_sprite(new AnimatedTile)
+    , m_anim_count(0)
+{
+    drawable = m_sprite;
+}
 
 AnimatedSpriteView::AnimatedSpriteView(std::string descriptionFile)
     : View()
