@@ -13,20 +13,11 @@ static std::string fromWide(std::wstring string)
     return std::string(string.begin(),string.end());
 }
 
+REGISTER_DERIVED_CLASS(BasicIABuilder,GamePad);
 
-template<class Type>
-Type* buildObject(std::string name,JSONObject& context)
-{
-    std::wstring className    = context[toWide(name)+L"Name"]->AsString() + L"Builder";
-    JSONObject*  classContext = (JSONObject*)&(context[toWide(name)+L"Context"]->AsObject());
-    return DerivedClassFactory<Type>::create(fromWide(className),&classContext);
-}
+REGISTER_DERIVED_CLASS(KeyBoardGamePadBuilder,GamePad);
 
-REGISTER_DERIVED_CLASS(BasicIABuilder,BasicIA);
-
-REGISTER_DERIVED_CLASS(KeyBoardGamePadBuilder,KeyBoardGamePad);
-
-REGISTER_DERIVED_CLASS(PlateformerPhysicBuilder,PlateformerPhysic);
+REGISTER_DERIVED_CLASS(PlateformerPhysicBuilder,Physics);
 bool PlateformerPhysicBuilder::selfInitilalise(void* context)
 {
     if(context == NULL) return false;
@@ -42,7 +33,7 @@ bool PlateformerPhysicBuilder::selfInitilalise(void* context)
     return true;
 }
 
-REGISTER_DERIVED_CLASS(AnimatedSpriteViewBuilder,AnimatedSpriteView);
+REGISTER_DERIVED_CLASS(AnimatedSpriteViewBuilder,View);
 bool AnimatedSpriteViewBuilder::selfInitilalise(void* context)
 {
     if(context == NULL) return false;

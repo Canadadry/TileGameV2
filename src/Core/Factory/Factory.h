@@ -20,7 +20,7 @@ public:
 
 // provide a simple create function to derived classes
 template<class DerivedClass, class BaseClass = Object>
-class RegisterToFactory : public BaseClass
+class RegisterToFactory : public DerivedClass
 {
 public:
     static BaseClass* create()
