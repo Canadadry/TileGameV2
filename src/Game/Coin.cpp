@@ -13,13 +13,13 @@ Coin::Coin(sf::Vector2f pos)
     : Entity()
 {
 
-    setBody(new Body(*this));
+    setBody(new Body());
     body()->setSize(sf::Vector2f(16,16));
     body()->setOrigin(sf::Vector2f(8,8));
     body()->setPosition(pos);
 
-    setView(new AnimatedSpriteView(*this,"Animation/coin.txt"));
-    name = "Coin";
+    setView(new AnimatedSpriteView("Animation/coin.txt"));
+    name = L"Coin";
 
 }
 

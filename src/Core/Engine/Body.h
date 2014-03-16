@@ -20,7 +20,7 @@ struct Contact
 class Body : public Component
 {
 public:
-    explicit Body(Entity& entity);
+    Body();
     virtual ~Body();
 
     void setOrigin(sf::Vector2f origin);

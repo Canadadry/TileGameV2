@@ -18,12 +18,12 @@
 Player::Player(TileMapLand* land)
     : Entity()
     , hitEnemy(false)
-    , m_sprite_view(new AnimatedSpriteView(*this,"Animation/player.txt"))
-    , m_plateforme_physics(new PlateformerPhysic(*this,land))
+    , m_sprite_view(new AnimatedSpriteView("Animation/player.txt"))
+    , m_plateforme_physics(new PlateformerPhysic(land))
 {
-    name =  "Player";
+    name =  L"Player";
 
-    setBody(new Body(*this));
+    setBody(new Body());
     body()->setSize(sf::Vector2f(16,16));
     body()->setOrigin(sf::Vector2f(8,8));
     body()->setPosition(sf::Vector2f(38,38));
@@ -37,7 +37,7 @@ Player::Player(TileMapLand* land)
     m_plateforme_physics->walk_deceleration = 0.3;
 
 
-    setGamepad(new KeyBoardGamePad(*this));
+    setGamepad(new KeyBoardGamePad());
 
     setView(m_sprite_view);
 

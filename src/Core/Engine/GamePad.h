@@ -11,7 +11,7 @@ namespace sf{ class Event; }
 class GamePad : public Component
 {
 public:
-    explicit GamePad(Entity& entity);
+    GamePad();
     virtual ~GamePad();
 
     virtual void handleEvent(const sf::Event& Event);

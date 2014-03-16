@@ -121,8 +121,8 @@ void TileGame::entering()
 	case 3 :  addEntity(new Coin(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size));break;
 	case 4: {
 	    Entity* nextLevel = new Entity;
-	    nextLevel->name = "nextLevel";
-	    nextLevel->setBody(new Body(*nextLevel));
+	    nextLevel->name = L"nextLevel";
+	    nextLevel->setBody(new Body());
 	    nextLevel->body()->setSize(sf::Vector2f(16,16));
 	    nextLevel->body()->setOrigin(sf::Vector2f(8,8));
 	    nextLevel->body()->setPosition(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size);
@@ -138,13 +138,13 @@ void TileGame::entering()
 
 void TileGame::handlePlayerCollision(Body* obstacle)
 {
-    if(obstacle->entity().name == "Coin") obstacle->entity().destroyThis();
-    else if(obstacle->entity().name == "nextLevel")
+    if(obstacle->entity().name == L"Coin") obstacle->entity().destroyThis();
+    else if(obstacle->entity().name == L"nextLevel")
     {
 	level_to_load++;
 	setNextScreen(new TileGame(windowWidth(),windowHeight()));
     }
-    else if(obstacle->entity().name == "Enemy")
+    else if(obstacle->entity().name == L"Enemy")
     {
 	if(m_player->physics()->speed.y > 0 && m_player->body()->position().y<obstacle->position().y)
 	{

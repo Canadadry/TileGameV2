@@ -5,8 +5,8 @@
 #include <Engine/Physics.h>
 #include <SFML/Window/Event.hpp>
 
-KeyBoardGamePad::KeyBoardGamePad(Entity& entity)
-: GamePad(entity)
+KeyBoardGamePad::KeyBoardGamePad()
+: GamePad()
 {
 }
 

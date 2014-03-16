@@ -6,8 +6,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <Debug/Assert.h>
 
-View::View(Entity& entity)
-    : Component(entity)
+View::View()
+    : Component()
     , drawable(0)
     , m_transformable()
     , m_debugDraw(new sf::RectangleShape())
@@ -20,7 +20,6 @@ View::View(Entity& entity)
 
 View::~View()
 {
-
 }
 
 

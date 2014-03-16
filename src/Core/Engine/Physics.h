@@ -9,13 +9,13 @@ class World;
 class Body;
 class TileMapLand;
 
-class JSONValue;
+
 
 
 class Physics : public Component
 {
 public:
-    explicit Physics(Entity& entity);
+    Physics();
     virtual ~Physics();
     virtual void  update();
 
@@ -27,8 +27,6 @@ public:
     TileMapLand* land;
 
     int cornerState() const;
-
-    static Component* build(Entity* entity,JSONValue& param);
 
 private:
     void checkTileMapCollision();

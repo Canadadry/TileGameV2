@@ -6,7 +6,9 @@ class JSONValue;
 
 class Component
 {
+    friend class Entity;
 public:
+    Component();
     explicit Component(Entity& entity);
     ~Component();
 
@@ -16,8 +18,8 @@ public:
 
     static Component* build(Entity* entity,JSONValue& param);
 
-protected:
-    Entity& m_entity;
+private:
+    Entity* m_entity;
 };
 
 #endif /* COMPONENT_H */

@@ -8,7 +8,7 @@ class AnimatedTile;
 class AnimatedSpriteView : public View
 {
 public:
-	AnimatedSpriteView(Entity& entity,std::string descriptionFile);
+	AnimatedSpriteView(std::string descriptionFile);
 	virtual ~AnimatedSpriteView();
 	void useAnim(unsigned int index);
 	unsigned int animCount() const;

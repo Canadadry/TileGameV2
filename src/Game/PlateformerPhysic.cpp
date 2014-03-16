@@ -4,8 +4,8 @@
 #include <Engine/TileMapLand.h>
 #include "PlateformerPhysic.h"
 
-PlateformerPhysic::PlateformerPhysic(Entity& entity,TileMapLand* tilemap)
-    : Physics(entity)
+PlateformerPhysic::PlateformerPhysic(TileMapLand* tilemap)
+    : Physics()
     , direction(PlateformerPhysic::Down)
     , jump_power(1)
     , walk_speed(0.1)

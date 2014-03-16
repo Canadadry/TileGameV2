@@ -11,8 +11,8 @@
 #include <iostream>
 
 
-AnimatedSpriteView::AnimatedSpriteView(Entity& entity,std::string descriptionFile)
-    : View(entity)
+AnimatedSpriteView::AnimatedSpriteView(std::string descriptionFile)
+    : View()
     , m_sprite(new AnimatedTile)
     , m_anim_count(0)
 {

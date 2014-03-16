@@ -14,7 +14,7 @@ namespace sf{
 class View : public Component
 {
 public:
-	explicit View(Entity& entity);
+	View();
 	virtual ~View();
 
 	sf::Drawable* drawable;

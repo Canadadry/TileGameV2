@@ -5,8 +5,8 @@
 #include <Engine/Physics.h>
 #include <SFML/Window/Event.hpp>
 
-BasicIA::BasicIA(Entity& entity)
-: GamePad(entity)
+BasicIA::BasicIA()
+: GamePad()
 {
 }
 

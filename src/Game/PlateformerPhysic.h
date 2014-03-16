@@ -17,7 +17,7 @@ public:
 	Falling
     };
 
-    PlateformerPhysic(Entity& entity, TileMapLand* land);
+    PlateformerPhysic(TileMapLand* land);
     virtual ~PlateformerPhysic();
 
     bool canJump();

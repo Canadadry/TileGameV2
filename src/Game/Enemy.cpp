@@ -13,15 +13,15 @@
 
 Enemy::Enemy(sf::Vector2f pos,TileMapLand* land)
     : Entity()
-    , m_plateforme_physics(new PlateformerPhysic(*this,land))
+    , m_plateforme_physics(new PlateformerPhysic(land))
 {
 
-    setBody(new Body(*this));
+    setBody(new Body());
     body()->setSize(sf::Vector2f(16,16));
     body()->setOrigin(sf::Vector2f(8,8));
     body()->setPosition(pos);
 
-    setView(new AnimatedSpriteView(*this,"Animation/enemy.txt"));
+    setView(new AnimatedSpriteView("Animation/enemy.txt"));
 
     setPhysics(m_plateforme_physics);
     m_plateforme_physics->gravity = sf::Vector2f(0,0.3);
@@ -31,9 +31,9 @@ Enemy::Enemy(sf::Vector2f pos,TileMapLand* land)
     m_plateforme_physics->run_speed  = m_plateforme_physics->walk_speed;
     m_plateforme_physics->walk_deceleration = 0.3;
 
-    setGamepad(new BasicIA(*this));
+    setGamepad(new BasicIA());
 
-    name = "Enemy";
+    name = L"Enemy";
 
 }
 

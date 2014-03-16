@@ -35,7 +35,7 @@ public:
 
     bool                    isAlive();
 
-    std::string        name;
+    std::wstring        name;
     Game*              game;
 
     void destroyThis();

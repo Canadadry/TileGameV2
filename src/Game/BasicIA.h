@@ -7,7 +7,7 @@
 class BasicIA : public GamePad
 {
 public:
-	BasicIA(Entity& entity);
+	BasicIA();
 	virtual ~BasicIA();
 
 
