@@ -1,0 +1,6 @@
+{
+    "name":"TileGameV2",
+    "width":640,
+    "height":480,
+    "entities":[ "", "Player", "Enemy", "Coin", "NextLevel"]
+}

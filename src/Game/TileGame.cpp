@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "Coin.h"
-#include "Enemy.h"
 #include "TileGame.h"
 #include "PlateformerPhysic.h"
 #include <Loader/Scene2D.h>
@@ -15,12 +13,12 @@
 #include <Factory/BasicType.h>
 
 int level_to_load= 0;
+//extern JSONObject* appConf;
 
 TileGame::TileGame(int window_width ,int window_height )
     : Game(window_width ,window_height)
     , m_width_in_tile(0)
     , m_height_in_tile(0)
-    //, m_terrain(new TileMapLand)
     , m_scene2D(0)
     , m_map()
     , m_camera(sf::Vector2f(window_width,window_height))
@@ -111,6 +109,8 @@ void TileGame::entering()
     m_camera.followBody(m_player->body());
     addEntity(m_player);
 
+
+
     for(unsigned int i=0;i<m_scene2D->entities.size();i++)
     {
 	Scene2D::Entity& entity = m_scene2D->entities[i];
@@ -128,6 +128,12 @@ void TileGame::entering()
 	}
     }
 }
+
+void TileGame::addEntityFromIdAt(int entityId, sf::Vector2f pos)
+{
+//    appConf["entities"]->AsArray()[entityId].AS
+}
+
 
 void TileGame::addEntityAt(Entity* entity, sf::Vector2f pos)
 {

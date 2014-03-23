@@ -1,8 +1,8 @@
 #include <Factory/BasicType.h>
 #include <Loader/JSON/JSON.h>
 #include <Loader/JSON/JSONValue.h>
+#include <Loader/JSON/JSONHelper.h>
 #include <iostream>
-#include <fstream>
 #include <Graphics/RessourceManager.h>
 
 #include <Engine/Physics.h>
@@ -16,24 +16,6 @@ static std::wstring toWide(std::string string)
 static std::string fromWide(std::wstring string)
 {
     return std::string(string.begin(),string.end());
-}
-
-
-// Helper to get a files contents
-bool get_file(std::string filename, std::wstring &data)
-{
-	std::wifstream in(filename.c_str());
-	if (in.is_open() == false)
-		return false;
-
-	std::wstring line;
-	data = L"";
-	while (std::getline(in, line))
-	{
-		data += line;
-		if (!in.eof()) data += L"\n";
-	}
-	return true;
 }
 
 
@@ -74,14 +56,8 @@ REGISTER_DERIVED_CLASS(EntityBuilder,Entity);
 bool EntityBuilder::selfInitilalise(void* context)
 {
     if(context == NULL) return false;
-    std::wstring data;
     std::string filename = RessourceManager::ressourcesDir+"Entity/"+std::string((char*)context)+".json";
-    get_file(filename,data);
-
-    //std::cerr << " parsing json file("<< filename << ")" << std::endl;
-
-
-    JSONValue*   parseResult = JSON::Parse(data.c_str());
+    JSONValue*   parseResult = JSONParseFile(filename);
     if(parseResult == NULL )
     {
 	std::cerr << "Error while parsing file "<< filename << std::endl;

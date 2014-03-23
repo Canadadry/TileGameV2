@@ -5,12 +5,15 @@ Done - Add description Animation file (no more code just a load animFromFile)
 Done - Add goomba
 Done - Add second Level
 PostPoned Change Asset
-Add json entity descriptor
-    * add component factory
-    * defining component for an entity
-    * add properties
-    * can change default value for each component
-    * How to handle animation selection in player class ?????
+Done - Add json entity descriptor
+Done -     * add component factory
+Done -     * defining component for an entity
+Done -     * add properties
+Done -     * can change default value for each component
+    * How to handle animation selection in player class ????? (lua ?)
+Add game.json file which link entity id from Tiled to an entity desc (.json)
+Add generic components on entity accessible by Name
+Add generic properties on component
 Work on physics
     * jump power link to duration of user impulsion. The longer you press the higher you jump
     * in the air you can't change direction just slow to reduction jump distance
