@@ -37,7 +37,7 @@ bool PlateformerPhysicBuilder::selfInitilalise(void* context)
     run_speed         = getValue<float>(jsonObject,"runSpeed",0.0f);
     walk_deceleration = getValue<float>(jsonObject,"walkDeceleration",0.0f);
 
-    std::cout << "gravity ("<<gravity.x<<","<<gravity.y<<")" << std::endl;
+    //std::cout << "gravity ("<<gravity.x<<","<<gravity.y<<")" << std::endl;
 
 
     return true;

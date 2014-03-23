@@ -42,21 +42,21 @@ Type* buildObject(std::string name,JSONObject& context)
 {
     std::wstring sectionName = toWide(name)+L"Name";
     std::wstring sectionContext = toWide(name)+L"Context";
-    std::cerr << "  trying to build component " << name << std::endl;
+    //std::cerr << "  trying to build component " << name << std::endl;
 
     if(context.find(sectionName) == context.end())
     {
-	std::cerr<<"        " << name << "Name not found" << std::endl;
+	//std::cerr<<"        " << name << "Name not found" << std::endl;
 	return NULL;
     }
     if(context.find(sectionContext)== context.end())
     {
-	std::cerr<<"        " << name << "Context not found" << std::endl;
+	//std::cerr<<"        " << name << "Context not found" << std::endl;
 	return NULL;
     }
     if(context.find(sectionContext)->second->IsObject() == false)
     {
-	std::cerr<<"        " << name << "Context not an object" << std::endl;
+	//std::cerr<<"        " << name << "Context not an object" << std::endl;
 	return NULL;
     }
     std::wstring className    = context[sectionName]->AsString() + L"Builder";
@@ -64,7 +64,7 @@ Type* buildObject(std::string name,JSONObject& context)
 
     Type* object = DerivedClassFactory<Type>::create(fromWide(className),classContext);
 
-    std::cerr << "  Has to build component" << name << " of class " << fromWide(className) << " : " << (long long)object << std::endl;
+    //std::cerr << "  Has to build component" << name << " of class " << fromWide(className) << " : " << (long long)object << std::endl;
 
     return object;
 
@@ -90,14 +90,14 @@ bool EntityBuilder::selfInitilalise(void* context)
     JSONObject   jsonObject = parseResult->AsObject();
     name = jsonObject[L"name"]->AsString();
 
-    std::cerr << "building entity " << (char*) context << " with name " << fromWide(name) << std::endl;
+    //std::cerr << "building entity " << (char*) context << " with name " << fromWide(name) << std::endl;
 
     setBody(buildObject<Body>("body",jsonObject));
     setView(buildObject<View>("view",jsonObject));
     setPhysics(buildObject<Physics>("physics",jsonObject));
     setGamepad(buildObject<GamePad>("gamepad",jsonObject));
 
-    std::cerr <<"build done"  << std::endl;
+    //std::cerr <<"build done"  << std::endl;
 
     return true;
 }
