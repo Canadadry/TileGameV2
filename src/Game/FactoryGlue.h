@@ -8,18 +8,18 @@
 #include "KeyBoardGamePad.h"
 #include "PlateformerPhysic.h"
 
-class BasicIABuilder : public RegisterToFactory<BasicIA,GamePad>{};
+class BasicIABuilder : public RegisterToFactory<BasicIABuilder,BasicIA,GamePad>{};
 
-class KeyBoardGamePadBuilder : public RegisterToFactory<KeyBoardGamePad,GamePad>{};
+class KeyBoardGamePadBuilder : public RegisterToFactory<KeyBoardGamePadBuilder,KeyBoardGamePad,GamePad>{};
 
 
-class PlateformerPhysicBuilder : public RegisterToFactory<PlateformerPhysic,Physics>, public Initialisable
+class PlateformerPhysicBuilder : public RegisterToFactory<PlateformerPhysicBuilder,PlateformerPhysic,Physics>, public Initialisable
 {
 public :
     virtual bool selfInitilalise(void* context);
 };
 
-class AnimatedSpriteViewBuilder : public RegisterToFactory<AnimatedSpriteView,View>, public Initialisable
+class AnimatedSpriteViewBuilder : public RegisterToFactory<AnimatedSpriteViewBuilder,AnimatedSpriteView,View>, public Initialisable
 {
 public :
     virtual bool selfInitilalise(void* context);

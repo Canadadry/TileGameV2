@@ -11,7 +11,7 @@ class PlateformerPhysic;
 class Enemy : public Entity
 {
 public:
-	Enemy(sf::Vector2f pos,TileMapLand* land);
+	Enemy(/*sf::Vector2f pos ,TileMapLand* land*/);
 	virtual ~Enemy();
 private:
 	PlateformerPhysic* m_plateforme_physics;

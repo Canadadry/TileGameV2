@@ -48,7 +48,6 @@ void  Physics::update()
 	    land = dynamic_cast<Game*>(Screen::current())->m_terrain;
 	    checkTileMapCollision();
 	}
-
     }
 }
 

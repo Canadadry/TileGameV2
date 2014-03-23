@@ -1,0 +1,24 @@
+{
+    "name":"Enemy",
+    "bodyName":"Body",
+    "bodyContext":{
+        "sizeX":16,
+        "sizeY":16,
+        "originX":8,
+        "originY":8
+    },
+    "viewName":"AnimatedSpriteView",
+    "viewContext":{"animationFile":"Animation/enemy.txt"},
+    "physicsName":"PlateformerPhysic",
+    "physicsContext":{
+	"gravityX":0.0,
+	"gravityY":0.3,
+	"maxSpeedX":1.5,
+	"maxSpeedY":8.0,
+	"walkSpeed":1.5,
+	"runSpeed":1.5,
+	"walkDeceleration":0.3
+    },
+    "gamepadName":"BasicIA",
+    "gamepadContext":{}
+}

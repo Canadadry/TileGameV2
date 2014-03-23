@@ -11,7 +11,7 @@
 #include <SFML/Graphics.hpp>
 
 
-Enemy::Enemy(sf::Vector2f pos,TileMapLand* land)
+Enemy::Enemy(/*sf::Vector2f pos,TileMapLand* land*/)
     : Entity()
     , m_plateforme_physics(new PlateformerPhysic(/*land*/))
 {
@@ -19,7 +19,7 @@ Enemy::Enemy(sf::Vector2f pos,TileMapLand* land)
     setBody(new Body());
     body()->setSize(sf::Vector2f(16,16));
     body()->setOrigin(sf::Vector2f(8,8));
-    body()->setPosition(pos);
+    //body()->setPosition(pos);
 
     setView(new AnimatedSpriteView("Animation/enemy.txt"));
 

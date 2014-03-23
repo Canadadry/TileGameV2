@@ -1,0 +1,10 @@
+{
+    "name":"nextLevel",
+    "bodyName":"Body",
+    "bodyContext":{
+	"sizeX":16,
+	"sizeY":16,
+	"originX":8,
+	"originY":8
+    }
+}

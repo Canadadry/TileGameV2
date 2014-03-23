@@ -30,6 +30,7 @@ public:
 
 protected:
     virtual void entering() ;
+    void addEntityAt(Entity* entity, sf::Vector2f pos);
 
     int m_width_in_tile;
     int m_height_in_tile;

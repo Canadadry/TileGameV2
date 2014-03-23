@@ -28,10 +28,10 @@ View*                Entity::view()          const{ return m_view          ;}
 Physics*             Entity::physics()       const{ return m_physics       ;}
 GamePad*             Entity::gamepad()       const{ return m_gamepad       ;}
 
-void Entity::setBody   (Body*    body   )         { m_body    = body   ; ((Component*)m_body)->m_entity    = this; }
-void Entity::setPhysics(Physics* physics)         { m_physics = physics; m_physics->m_entity = this; }
-void Entity::setView   (View*    view   )         { m_view    = view   ; m_view->m_entity    = this; }
-void Entity::setGamepad(GamePad* gamepad)         { m_gamepad = gamepad; m_gamepad->m_entity = this; }
+void Entity::setBody   (Body*    body   )         { if(body == NULL)    return; m_body    = body   ; ((Component*)m_body)->m_entity    = this; }
+void Entity::setPhysics(Physics* physics)         { if(physics == NULL) return; m_physics = physics; m_physics->m_entity = this; }
+void Entity::setView   (View*    view   )         { if(view == NULL)    return; m_view    = view   ; m_view->m_entity    = this; }
+void Entity::setGamepad(GamePad* gamepad)         { if(gamepad == NULL) return; m_gamepad = gamepad; m_gamepad->m_entity = this; }
 
 bool Entity::isAlive(){ return m_isAlive; }
 

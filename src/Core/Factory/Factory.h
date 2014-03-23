@@ -19,13 +19,13 @@ public:
 };
 
 // provide a simple create function to derived classes
-template<class DerivedClass, class BaseClass = Object>
+template<class Builder,class DerivedClass, class BaseClass = Object>
 class RegisterToFactory : public DerivedClass
 {
 public:
     static BaseClass* create()
     {
-	return new DerivedClass();
+	return new Builder();
     }
 };
 

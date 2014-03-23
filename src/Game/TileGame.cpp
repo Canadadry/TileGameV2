@@ -12,7 +12,7 @@
 #include <Engine/Body.h>
 
 #include <SFML/Graphics.hpp>
-
+#include <Factory/BasicType.h>
 
 int level_to_load= 0;
 
@@ -116,25 +116,26 @@ void TileGame::entering()
 	Scene2D::Entity& entity = m_scene2D->entities[i];
 	Entity* mob = 0;
 	//		printf("entity id is %d\n",entity.entityId);
+	sf::Vector2f entityPos = sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size;
 	switch(entity.entityId)
 	{
-	case 2 :  addEntity(new Enemy(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size,m_terrain));break;
-	case 3 :  addEntity(new Coin(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size));break;
-	case 4: {
-	    Entity* nextLevel = new Entity;
-	    nextLevel->name = L"nextLevel";
-	    nextLevel->setBody(new Body());
-	    nextLevel->body()->setSize(sf::Vector2f(16,16));
-	    nextLevel->body()->setOrigin(sf::Vector2f(8,8));
-	    nextLevel->body()->setPosition(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size);
-	    addEntity(nextLevel);
-	}
+	case 2 :  addEntityAt(buildEntity("Enemy"),entityPos);break;
+	case 3 :  addEntityAt(buildEntity("Coin"),entityPos);break;
+	case 4 :  addEntityAt(buildEntity("NextLevel"),entityPos);break;
 	case 0 :  break;
 	case 1 :  m_player->body()->setPosition(sf::Vector2f(entity.x+0.5,entity.y+0.5)*(float)m_scene2D->tile_size);//break;
 	default : break;
 	}
     }
 }
+
+void TileGame::addEntityAt(Entity* entity, sf::Vector2f pos)
+{
+    if(entity == NULL) return;
+    if(entity->body() != NULL ) entity->body()->setPosition(pos);
+    addEntity(entity);
+}
+
 
 
 void TileGame::handlePlayerCollision(Body* obstacle)
